@@ -39,7 +39,7 @@ public class Launcher {
         this.jf = new JFrame();             // creating a new JFrame object
         this.jf.setTitle("Tank Wars Game"); // setting the title of the JFrame window.
         // when the GUI is closed, this will also shut down the VM
-        this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // terminates the JVM (game closes fully)
     }
 
     private void initUIComponents(){
@@ -51,6 +51,7 @@ public class Launcher {
         JPanel startPanel = new StartMenuPanel(this); // create a new start panel
         this.gamePanel = new GameWorld(this); // create a new game panel
         this.gamePanel.InitializeGame(); // initialize game, but DO NOT start game
+        // maybe don't load resources inside initializeGame()
         /*
          * end panel is used to show the end game panel.  it will contain
          * two buttons restart and exit.

@@ -16,7 +16,7 @@ public class StartMenuPanel extends JPanel {
 
     public StartMenuPanel(Launcher lf) {
         this.lf = lf;
-        try {
+        try { // most likely will be removed and will use a resource manager to take care of this
 
             menuBackground = ImageIO.read(this.getClass().getClassLoader().getResource("title.png"));
         } catch (IOException e) {

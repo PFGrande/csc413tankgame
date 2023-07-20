@@ -9,13 +9,13 @@ import java.awt.image.BufferedImage;
  *
  * @author anthony-pc
  */
-public class Tank{
+public class Tank{ // normally player and tank are seperated
 
     private float x;
     private float y;
-    private float vx;
-    private float vy;
-    private float angle;
+    private float vx; // change in x
+    private float vy; // change in y
+    private float angle; // way tank is facing
 
     private float R = 5;
     private float ROTATIONSPEED = 3.0f;

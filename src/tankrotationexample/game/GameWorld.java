@@ -20,7 +20,7 @@ public class GameWorld extends JPanel implements Runnable {
     private BufferedImage world;
     private Tank t1;
     private final Launcher lf;
-    private long tick = 0;
+    private long tick = 0; // for tick logic, not necessary to be used.
 
     /**
      *
@@ -35,12 +35,12 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 this.tick++;
                 this.t1.update(); // update tank
-                this.repaint();   // redraw game
+                this.repaint();   // redraw game, never call paint component directly; repaint happens on different thread
                 /*
                  * Sleep for 1000/144 ms (~6.9ms). This is done to have our 
                  * loop run at a fixed rate per/sec. 
                 */
-                Thread.sleep(1000 / 144);
+                Thread.sleep(1000 / 144); // artificially slow game down to prevent it from updating too fast
             }
         } catch (InterruptedException ignored) {
             System.out.println(ignored);

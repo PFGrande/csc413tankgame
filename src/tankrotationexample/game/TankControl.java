@@ -8,7 +8,10 @@ import java.awt.event.KeyListener;
  * @author anthony-pc
  */
 public class TankControl implements KeyListener {
-    private final Tank t1;
+    // these variables may or may not be final
+    // if a controls screen is created, these values should not be final
+    // do not make these final if powerups are going to affect them
+    private final Tank t1; // t1 should just be tank
     private final int up;
     private final int down;
     private final int right;
@@ -25,7 +28,7 @@ public class TankControl implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {
+    public void keyTyped(KeyEvent ke) { // key pressed and release
 
     }
 
