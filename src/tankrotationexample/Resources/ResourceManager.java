@@ -18,22 +18,17 @@ public class ResourceManager {
     private final static Map<String, Clip> sounds = new HashMap<String, Clip>();
 
     private static void initSprites() {
+
+        try {
+            ResourceManager.sprites.put("tank1", loadSprite("tank1.png"));
+            ResourceManager.sprites.put("tank2", loadSprite("tank2.png"));
+
+        } catch (IOException e) {
+
+        }
         //BufferedImage t = ImageIO.read(ResourceManager.class.getClassLoader().getResource("tank1.png"));
-        ResourceManager.sprites.put("tank1", loadSprite("tank1.png"));
 
 
-
-
-
-//        try {
-//            return ImageIO.read(
-//                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(imgPath),
-//                            "Could not find " + imgPath + ".png")
-//            );
-//        } catch (IOException ex) {
-//            System.out.println(ex.getMessage());
-//            ex.printStackTrace();
-//        }
     }
 
     public static void loadResources() {
@@ -44,12 +39,8 @@ public class ResourceManager {
         ResourceManager.initSprites();
     }
 
-    private static BufferedImage loadSprite(String path) {
-        try {
-            BufferedImage t = ImageIO.read(ResourceManager.class.getClassLoader().getResource(path));
-            //ResourceManager.sprites.put("tank1", t);
-        } catch (IOException e) {
+    private static BufferedImage loadSprite(String path) throws IOException {
 
-        }
+        return ImageIO.read(ResourceManager.class.getClassLoader().getResource(path));
     }
 }
