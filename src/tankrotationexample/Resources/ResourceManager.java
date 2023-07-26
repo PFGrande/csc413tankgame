@@ -24,7 +24,7 @@ public class ResourceManager {
             ResourceManager.sprites.put("tank2", loadSprite("tank2.png"));
 
         } catch (IOException e) {
-
+            throw new RuntimeException(e);
         }
         //BufferedImage t = ImageIO.read(ResourceManager.class.getClassLoader().getResource("tank1.png"));
 
@@ -41,6 +41,6 @@ public class ResourceManager {
 
     private static BufferedImage loadSprite(String path) throws IOException {
 
-        return ImageIO.read(ResourceManager.class.getClassLoader().getResource(path));
+        return ImageIO.read(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource(path), "Unable to find image at path: " + path));
     }
 }
