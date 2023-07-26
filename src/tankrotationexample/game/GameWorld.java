@@ -37,6 +37,7 @@ public class GameWorld extends JPanel implements Runnable {
             while (true) {
                 //this.tick++;
                 this.t1.update(); // update tank
+                this.t2.update();
                 this.repaint();   // redraw game, never call paint component directly; repaint happens on different thread
                 /*
                  * Sleep for 1000/144 ms (~6.9ms). This is done to have our 
@@ -68,20 +69,20 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.GAME_SCREEN_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        BufferedImage t1img = null;
-        try {
-            /*
-             * note class loaders read files from the out folder (build folder in Netbeans) and not the
-             * current working directory. When running a jar, class loaders will read from within the jar.
-             */
-            t1img = ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
-                    "Could not find tank1.png")
-            );
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
+        //BufferedImage t1img = null;
+//        try {
+//            /*
+//             * note class loaders read files from the out folder (build folder in Netbeans) and not the
+//             * current working directory. When running a jar, class loaders will read from within the jar.
+//             */
+////            t1img = ImageIO.read(
+////                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
+////                    "Could not find tank1.png")
+////            );
+//        } catch (IOException ex) {
+//            System.out.println(ex.getMessage());
+//            ex.printStackTrace();
+//        }
 
 
 
@@ -97,9 +98,13 @@ public class GameWorld extends JPanel implements Runnable {
 //            throw new RuntimeException(e);
 //        }
 
-        t1 = new Tank(300, 300, 0, 0, (short) 0, t1img);
+
+        t1 = new Tank(300, 300, 0, 0, (short) 0, getTankImage("tank1.png"));
+        t2 = new Tank(300, 300, 0, 0, (short) 0, getTankImage("tank1.png"));
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
+        TankControl tc2 = new TankControl(t2, KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_N);
         this.lf.getJf().addKeyListener(tc1);
+        this.lf.getJf().addKeyListener(tc2);
     }
 
     /*
@@ -126,12 +131,25 @@ public class GameWorld extends JPanel implements Runnable {
 //        throw new RuntimeException(e);
 //    }
 
+    BufferedImage getTankImage(String imgPath) {
+        try {
+            return ImageIO.read(
+                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(imgPath),
+                            "Could not find " + imgPath + ".png")
+            );
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics(); // all game objects draw to this buffer
         this.t1.drawImage(buffer);
+        this.t2.drawImage(buffer);
         g2.drawImage(world, 0, 0, null);
     }
 }
