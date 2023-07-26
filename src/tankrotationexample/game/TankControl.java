@@ -11,7 +11,15 @@ public class TankControl implements KeyListener {
     // these variables may or may not be final
     // if a controls screen is created, these values should not be final
     // do not make these final if powerups are going to affect them
-    private final Tank t1; // t1 should just be tank
+
+    // finals can be initialized in the declaration and constructor
+
+    /*
+    Todo:
+    - add shoot key
+
+     */
+    private final Tank tank; // t1 should just be tank
     private final int up;
     private final int down;
     private final int right;
@@ -19,7 +27,7 @@ public class TankControl implements KeyListener {
     private final int shoot;
     
     public TankControl(Tank t1, int up, int down, int left, int right, int shoot) {
-        this.t1 = t1;
+        this.tank = t1;
         this.up = up;
         this.down = down;
         this.right = right;
@@ -36,16 +44,16 @@ public class TankControl implements KeyListener {
     public void keyPressed(KeyEvent ke) {
         int keyPressed = ke.getKeyCode();
         if (keyPressed == up) {
-            this.t1.toggleUpPressed();
+            this.tank.toggleUpPressed();
         }
         if (keyPressed == down) {
-            this.t1.toggleDownPressed();
+            this.tank.toggleDownPressed();
         }
         if (keyPressed == left) {
-            this.t1.toggleLeftPressed();
+            this.tank.toggleLeftPressed();
         }
         if (keyPressed == right) {
-            this.t1.toggleRightPressed();
+            this.tank.toggleRightPressed();
         }
     }
 
@@ -53,16 +61,16 @@ public class TankControl implements KeyListener {
     public void keyReleased(KeyEvent ke) {
         int keyReleased = ke.getKeyCode();
         if (keyReleased  == up) {
-            this.t1.unToggleUpPressed();
+            this.tank.unToggleUpPressed();
         }
         if (keyReleased == down) {
-            this.t1.unToggleDownPressed();
+            this.tank.unToggleDownPressed();
         }
         if (keyReleased  == left) {
-            this.t1.unToggleLeftPressed();
+            this.tank.unToggleLeftPressed();
         }
         if (keyReleased  == right) {
-            this.t1.unToggleRightPressed();
+            this.tank.unToggleRightPressed();
         }
     }
 }

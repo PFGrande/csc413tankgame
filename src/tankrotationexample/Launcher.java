@@ -6,7 +6,15 @@ import tankrotationexample.menus.StartMenuPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+/* TODO:
+    - add resource manager and animation manager
+    - initialize game already loads resources in,
+        no need to reload them back in if the game is being restarted, they are already loaded
+    - always use the interface for the left hand side. ex: Map<> sprites = new HashMap<>();
+    - sound class wraps a clip - clip is a sound, clip runs on its own thread whenever made
+    - all static assets such be done by monday
 
+*/
 public class Launcher {
 
     /*
@@ -39,10 +47,10 @@ public class Launcher {
         this.jf = new JFrame();             // creating a new JFrame object
         this.jf.setTitle("Tank Wars Game"); // setting the title of the JFrame window.
         // when the GUI is closed, this will also shut down the VM
-        this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // terminates the JVM (game closes fully)
+        this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // terminates the JVM (game closes fully) after closing window
     }
 
-    private void initUIComponents(){
+    private void initUIComponents(){ // set up screen and give control to start screen
         this.mainPanel = new JPanel(); // create a new main panel
         /*
          * start panel will be used to view the start menu. It will contain
@@ -51,7 +59,7 @@ public class Launcher {
         JPanel startPanel = new StartMenuPanel(this); // create a new start panel
         this.gamePanel = new GameWorld(this); // create a new game panel
         this.gamePanel.InitializeGame(); // initialize game, but DO NOT start game
-        // maybe don't load resources inside initializeGame()
+        // suggestion: maybe don't load resources inside initializeGame()
         /*
          * end panel is used to show the end game panel.  it will contain
          * two buttons restart and exit.
@@ -78,13 +86,13 @@ public class Launcher {
                 this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
                 //start a new thread for the game to run. This will ensure our JFrame is responsive and
                 // not stuck executing the game loop.
-                (new Thread(this.gamePanel)).start();
+                (new Thread(this.gamePanel)).start(); // starts game on new thread, preventing it from running on UI thread
             }
             case "end" ->
                 // set the size of the jFrame to the expected size for the end panel
                     this.jf.setSize(GameConstants.END_MENU_SCREEN_WIDTH, GameConstants.END_MENU_SCREEN_HEIGHT);
         }
-        this.cl.show(mainPanel, type); // change current panel shown on main panel tp the panel denoted by type.
+        this.cl.show(mainPanel, type); // change current panel shown on main panel to the panel denoted by type.
         this.jf.setVisible(true); // show the JFrame
     }
 

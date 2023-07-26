@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 /**
@@ -19,8 +20,9 @@ public class GameWorld extends JPanel implements Runnable {
 
     private BufferedImage world;
     private Tank t1;
+    private Tank t2;
     private final Launcher lf;
-    private long tick = 0; // for tick logic, not necessary to be used.
+    //private long tick = 0; // for tick logic, not necessary to be used.
 
     /**
      *
@@ -33,7 +35,7 @@ public class GameWorld extends JPanel implements Runnable {
     public void run() {
         try {
             while (true) {
-                this.tick++;
+                //this.tick++;
                 this.t1.update(); // update tank
                 this.repaint();   // redraw game, never call paint component directly; repaint happens on different thread
                 /*
@@ -50,8 +52,9 @@ public class GameWorld extends JPanel implements Runnable {
     /**
      * Reset game to its initial state.
      */
-    public void resetGame() {
-        this.tick = 0;
+    public void resetGame() { // reminder to add tank 2 to this
+        // spawn powerups and walls
+        //this.tick = 0;
         this.t1.setX(300);
         this.t1.setY(300);
     }
@@ -80,15 +83,54 @@ public class GameWorld extends JPanel implements Runnable {
             ex.printStackTrace();
         }
 
+
+
+//        InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader()));
+//        try (BufferedReader mapReader = new BufferedReader(isr)) {
+//            int row = 0;
+//            String[] gameItems;
+//            while (mapReader.ready()) {
+//                gameItems = mapReader.readLine().strip().split(regex: ",")
+//            }
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
         t1 = new Tank(300, 300, 0, 0, (short) 0, t1img);
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
         this.lf.getJf().addKeyListener(tc1);
     }
 
+    /*
+    game object doesn't need to know about the objects it doesnt support, only those it does support
+    in the try catch, 0 should be checked for instead of doing it in the game objects.
+        Distinguished what is related to worlloader and game object. Because 0 isn't a game object,
+        it shouldn't be in the GameObject class
+
+     resource pool: prevent constant object creation in java
+     synchronized list: ?
+
+
+     */
+
+//    InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader()));
+//    try (BufferedReader mapReader = new BufferedReader(isr)) {
+//        int row = 0;
+//        String[] gameItems;
+//        while (mapReader.ready()) {
+//            gameItems = mapReader.readLine().strip().split(regex: ",")
+//        }
+//
+//    } catch (IOException e) {
+//        throw new RuntimeException(e);
+//    }
+
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        Graphics2D buffer = world.createGraphics();
+        Graphics2D buffer = world.createGraphics(); // all game objects draw to this buffer
         this.t1.drawImage(buffer);
         g2.drawImage(world, 0, 0, null);
     }
