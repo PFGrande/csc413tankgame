@@ -22,6 +22,7 @@ public class ResourceManager {
         try {
             ResourceManager.sprites.put("tank1", loadSprite("tank1.png"));
             ResourceManager.sprites.put("tank2", loadSprite("tank2.png"));
+            ResourceManager.sprites.put("menu", loadSprite("title.png"));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -39,8 +40,16 @@ public class ResourceManager {
         ResourceManager.initSprites();
     }
 
+    public static BufferedImage getSprite(String type) {
+        if (!ResourceManager.sprites.containsKey(type)) {
+            throw new RuntimeException("%s is missing from the sprite resources".formatted(type));
+        }
+
+        return ResourceManager.sprites.get(type);
+    }
+
     private static BufferedImage loadSprite(String path) throws IOException {
 
-        return ImageIO.read(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource(path), "Unable to find image at path: " + path));
+        return ImageIO.read(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource(path), "Unable to find image at path: %s".formatted(path)));
     }
 }

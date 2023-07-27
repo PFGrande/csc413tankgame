@@ -3,6 +3,7 @@ package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
 import tankrotationexample.Launcher;
+import tankrotationexample.Resources.ResourceManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -69,38 +70,9 @@ public class GameWorld extends JPanel implements Runnable {
                 GameConstants.GAME_SCREEN_HEIGHT,
                 BufferedImage.TYPE_INT_RGB);
 
-        //BufferedImage t1img = null;
-//        try {
-//            /*
-//             * note class loaders read files from the out folder (build folder in Netbeans) and not the
-//             * current working directory. When running a jar, class loaders will read from within the jar.
-//             */
-////            t1img = ImageIO.read(
-////                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource("tank1.png"),
-////                    "Could not find tank1.png")
-////            );
-//        } catch (IOException ex) {
-//            System.out.println(ex.getMessage());
-//            ex.printStackTrace();
-//        }
 
-
-
-//        InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader()));
-//        try (BufferedReader mapReader = new BufferedReader(isr)) {
-//            int row = 0;
-//            String[] gameItems;
-//            while (mapReader.ready()) {
-//                gameItems = mapReader.readLine().strip().split(regex: ",")
-//            }
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
-        t1 = new Tank(300, 300, 0, 0, (short) 0, getTankImage("tank1.png"));
-        t2 = new Tank(300, 300, 0, 0, (short) 0, getTankImage("tank1.png"));
+        t1 = new Tank(300, 300, 0, 0, (short) 0, ResourceManager.getSprite("tank1"));
+        t2 = new Tank(300, 300, 0, 0, (short) 0, ResourceManager.getSprite("tank2"));
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_N);
         this.lf.getJf().addKeyListener(tc1);
@@ -130,19 +102,7 @@ public class GameWorld extends JPanel implements Runnable {
 //    } catch (IOException e) {
 //        throw new RuntimeException(e);
 //    }
-
-    BufferedImage getTankImage(String imgPath) {
-        try {
-            return ImageIO.read(
-                    Objects.requireNonNull(GameWorld.class.getClassLoader().getResource(imgPath),
-                            "Could not find " + imgPath + ".png")
-            );
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        return null;
-    }
+    
 
     @Override
     public void paintComponent(Graphics g) {
