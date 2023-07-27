@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,6 +24,8 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t1;
     private Tank t2;
     private final Launcher lf;
+
+    private final BufferedImage floor =  ResourceManager.getSprite("floor");
     //private long tick = 0; // for tick logic, not necessary to be used.
 
     /**
@@ -108,6 +111,11 @@ public class GameWorld extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics(); // all game objects draw to this buffer
+
+        //placeholder code to get rid of trail with rendering black background
+        buffer.setColor(Color.black);
+        buffer.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
+
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
         g2.drawImage(world, 0, 0, null);
