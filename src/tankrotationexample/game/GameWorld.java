@@ -102,7 +102,7 @@ public class GameWorld extends JPanel implements Runnable {
 //    } catch (IOException e) {
 //        throw new RuntimeException(e);
 //    }
-    
+
 
     @Override
     public void paintComponent(Graphics g) {

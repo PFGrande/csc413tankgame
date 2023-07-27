@@ -23,6 +23,9 @@ public class ResourceManager {
             ResourceManager.sprites.put("tank1", loadSprite("tank1.png"));
             ResourceManager.sprites.put("tank2", loadSprite("tank2.png"));
             ResourceManager.sprites.put("menu", loadSprite("title.png"));
+            ResourceManager.sprites.put("bullet", loadSprite("bullet/bullet.jpg"));
+            ResourceManager.sprites.put("rocket1", loadSprite("bullet/rocket1.png"));
+            ResourceManager.sprites.put("rocket2", loadSprite("bullet/rocket2.png"));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
