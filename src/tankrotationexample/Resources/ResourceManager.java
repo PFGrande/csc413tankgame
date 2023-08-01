@@ -1,5 +1,6 @@
 package tankrotationexample.Resources;
 
+import tankrotationexample.game.Bullet;
 import tankrotationexample.game.GameWorld;
 
 import javax.imageio.ImageIO;
@@ -44,6 +45,10 @@ public class ResourceManager {
 
     public static void main(String[] args) { // test assets loading
         ResourceManager.initSprites();
+
+        // create pool of bullets
+        ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
+        bulletPool.fillPool(Bullet.class, 300);
     }
 
     public static BufferedImage getSprite(String type) {
