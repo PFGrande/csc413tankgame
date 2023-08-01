@@ -27,6 +27,8 @@ public class ResourceManager {
             ResourceManager.sprites.put("rocket1", loadSprite("bullet/rocket1.png"));
             ResourceManager.sprites.put("rocket2", loadSprite("bullet/rocket2.png"));
             ResourceManager.sprites.put("floor", loadSprite("floor/bg.bmp"));
+            ResourceManager.sprites.put("unbreak", loadSprite("walls/unbreak.jpg"));
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);

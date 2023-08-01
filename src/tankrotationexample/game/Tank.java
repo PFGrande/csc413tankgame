@@ -116,7 +116,7 @@ public class Tank{ // normally player and tank are seperated
     }
 
 
-    private void checkBorder() {
+    private void checkBorder() { // game screen measurements should be changed to game world measurements
         if (x < 30) {
             x = 30;
         }
@@ -147,4 +147,22 @@ public class Tank{ // normally player and tank are seperated
         g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
 
     }
+
+//    public void centerScreen() {
+//        this.screenX = this.x - GameConstants.GAME_SCREEN_WIDTH;
+//        this.screenY = this.y - GameConstants.GAME_SCREEN_HEIGHT;
+//
+//        if (this.screenX < 0) this.screenX - 0;
+//        if (this.screenY < 0) this.screenY = 0;
+//        if (this.screenX > GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_WORLD_HEIGHT);
+//
+//    }
+//
+//    public float getY() {
+//        return this.y;
+//    }
+//
+//    public float getX() {
+//        return this.x;
+//    }
 }

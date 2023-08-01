@@ -1,10 +1,10 @@
 # csc413-tankgame
 
 
-| Student Information |                |
-|:-------------------:|----------------|
-|  Student Name       |   Name Here    |
-|  Student Email      |   Email Here   |
+| Student Information |                       |
+|:-------------------:|-----------------------|
+|  Student Name       | Pedro Grande          |
+|  Student Email      | pgrande@mail.sfsu.edu |
 
 ## src Folder Purpose 
 src folder is to be used to store source code only.
@@ -37,10 +37,10 @@ The jar folder is to be used to store the built jar of your term-project.
 
 |               | Player 1 | Player 2 |
 |---------------|----------|----------|
-|  Forward      |          |          |
-|  Backward     |          |          |
-|  Rotate left  |          |          |
-|  Rotate Right |          |          |
-|  Shoot        |          |          |
+|  Forward      | w        | i        |
+|  Backward     | s        | k        |
+|  Rotate left  | a        | j        |
+|  Rotate Right | d        | l        |
+|  Shoot        | c        | n        |
 
 <!-- you may add more controls if you need to. -->
