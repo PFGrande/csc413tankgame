@@ -33,6 +33,7 @@ public class GameWorld extends JPanel implements Runnable {
 
     List<GameObject> gobjs = new ArrayList<>();
     //private long tick = 0; // for tick logic, not necessary to be used.
+    List<Animation> anim = new ArrayList<>();
 
     /**
      *
@@ -82,7 +83,6 @@ public class GameWorld extends JPanel implements Runnable {
         InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResourceAsStream("maps/TankMapConverted.csv")));
 
 
-
         // 0 = empty space
         // 9 = unbreakable barrier
         // 3 = unbreakable wall, collidable
@@ -119,6 +119,9 @@ public class GameWorld extends JPanel implements Runnable {
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_N);
         this.lf.getJf().addKeyListener(tc1);
         this.lf.getJf().addKeyListener(tc2);
+
+//        anim.add(new Animation(ResourceManager.getAnimation()))
+
     }
 
     /*
@@ -189,6 +192,10 @@ public class GameWorld extends JPanel implements Runnable {
         this.gobjs.forEach(gameObject -> gameObject.drawImage(buffer));
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
+
+        //this.anim.forEach(animation -> animation.update());
+        //this.anim.forEach(animation -> animation.drawImage(buffer));
+
         g2.drawImage(world, 0, 0, null);
         //renderMiniMap(g2); // renders it to the screen instead of the gameScreen. Drawing to game screen draws map inside map.
     }
