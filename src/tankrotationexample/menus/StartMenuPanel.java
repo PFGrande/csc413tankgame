@@ -3,6 +3,7 @@ package tankrotationexample.menus;
 
 import tankrotationexample.Launcher;
 import tankrotationexample.Resources.ResourceManager;
+import tankrotationexample.menus.PanelUserInterface;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,14 +25,11 @@ public class StartMenuPanel extends JPanel {
         this.setLayout(null);
 
         JButton start = new JButton("Start");
-        start.setFont(new Font("Courier New", Font.BOLD, 24));
-        start.setBounds(150, 300, 150, 50);
+        start = PanelUserInterface.formatButton(start, 150, 300);
         start.addActionListener(actionEvent -> this.lf.setFrame("game"));
 
         JButton exit = new JButton("Exit");
-        exit.setSize(new Dimension(200, 100));
-        exit.setFont(new Font("Courier New", Font.BOLD, 24));
-        exit.setBounds(150, 400, 150, 50);
+        exit = PanelUserInterface.formatButton(exit, 150, 400);
         exit.addActionListener((actionEvent -> this.lf.closeGame()));
 
         this.add(start);
