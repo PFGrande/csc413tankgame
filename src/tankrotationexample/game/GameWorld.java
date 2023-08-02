@@ -29,8 +29,6 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t2;
     private final Launcher lf;
 
-    private final BufferedImage floor =  ResourceManager.getSprite("floor");
-
     List<GameObject> gobjs = new ArrayList<>();
     //private long tick = 0; // for tick logic, not necessary to be used.
     List<Animation> anim = new ArrayList<>();
@@ -76,9 +74,10 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
-        this.world = new BufferedImage(GameConstants.GAME_SCREEN_WIDTH,
+        this.world = new BufferedImage(
+                GameConstants.GAME_SCREEN_WIDTH,
                 GameConstants.GAME_SCREEN_HEIGHT,
-                BufferedImage.TYPE_INT_RGB);
+                BufferedImage.TYPE_INT_RGB); // floor image
 
         InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResourceAsStream("maps/TankMapConverted.csv")));
 
@@ -93,8 +92,10 @@ public class GameWorld extends JPanel implements Runnable {
         try (BufferedReader mapReader = new BufferedReader(isr)) { // cycle through rows and columns to import map objs
             int row = 0;
             String[] gameItems;
+
             while (mapReader.ready()) {
                 gameItems = mapReader.readLine().strip().split(",");
+
                 for (int column = 0; column < gameItems.length; column++) {
 //                    System.out.println(gameItems[column]); // debugging
                     String gameObj = gameItems[column];
@@ -181,14 +182,29 @@ public class GameWorld extends JPanel implements Runnable {
 //
 //    }
 
+
+    private void drawFloor(Graphics g) {
+        for (int i = 0; i < GameConstants.GAME_WORLD_WIDTH; i+= 320) {
+            for (int j = 0; j < GameConstants.GAME_WORLD_HEIGHT; j+= 240) {
+                g.drawImage(ResourceManager.getSprite("floor"), i, j, null);
+            }
+        }
+
+
+
+    }
+
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Graphics2D buffer = world.createGraphics(); // all game objects draw to this buffer
 
+        this.drawFloor(buffer);
+
         //placeholder code to get rid of trail with rendering black background
-        buffer.setColor(Color.black);
-        buffer.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
+        //buffer.setColor(Color.black);
+        //buffer.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
         this.gobjs.forEach(gameObject -> gameObject.drawImage(buffer));
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
