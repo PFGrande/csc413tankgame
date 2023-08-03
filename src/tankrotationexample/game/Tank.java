@@ -146,6 +146,14 @@ public class Tank{ // normally player and tank are seperated
 
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
 //    public void centerScreen() {
 //        this.screenX = this.x - GameConstants.GAME_SCREEN_WIDTH;
 //        this.screenY = this.y - GameConstants.GAME_SCREEN_HEIGHT;

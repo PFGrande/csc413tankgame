@@ -174,10 +174,12 @@ public class GameWorld extends JPanel implements Runnable {
          */
         //System.out.println("BREAKS1");
         //System.out.println();
-        BufferedImage mm = this.world.getSubimage(0, 0, GameConstants.GAME_WORLD_WIDTH-1, GameConstants.GAME_WORLD_HEIGHT-1);
-        g.drawImage(mm, 0, 0, null);
+        BufferedImage mm = this.world.getSubimage(0, 0, GameConstants.GAME_WORLD_WIDTH, GameConstants.GAME_WORLD_HEIGHT);
+        //g.drawImage(mm, 0, 0, null);
         g.scale(.2,.2);
-        g.drawImage(mm, 0, 0, null);
+        g.drawImage(mm,
+                (GameConstants.GAME_SCREEN_WIDTH*5)/2 - (GameConstants.GAME_WORLD_WIDTH/2),
+                (GameConstants.GAME_SCREEN_HEIGHT*5) - (GameConstants.GAME_WORLD_HEIGHT) - 140, null);
 
 //        var mmX = GameConstants.GAME_SCREEN_WIDTH/2 - GameConstants.GAME_WORLD_WIDTH*(miniMapScaleFactor)/2;
 //        var mmY = GameConstants.GAME_SCREEN_HEIGHT - (GameConstants.GAME_WORLD_HEIGHT*miniMapScaleFactor) - 35;
@@ -225,9 +227,9 @@ public class GameWorld extends JPanel implements Runnable {
 
         //this.anim.forEach(animation -> animation.update());
         //this.anim.forEach(animation -> animation.drawImage(buffer));
-
+        g2.drawImage(world, 0, 0, null);
         renderMiniMap(g2); // renders it to the screen instead of the gameScreen. Drawing to game screen draws map inside map.
 
-        g2.drawImage(world, 0, 0, null);
+        //g2.drawImage(world, 0, 0, null);
     }
 }
