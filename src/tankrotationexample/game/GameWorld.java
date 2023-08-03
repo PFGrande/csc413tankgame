@@ -118,8 +118,8 @@ public class GameWorld extends JPanel implements Runnable {
         }
 
 
-        t1 = new Tank(300, 300, 0, ResourceManager.getSprite("tank1"));
-        t2 = new Tank(300, 300, 0, ResourceManager.getSprite("tank2"));
+        t1 = new Tank(500, 500, 0, ResourceManager.getSprite("tank1"));
+        t2 = new Tank(500, 500, 0, ResourceManager.getSprite("tank2"));
         TankControl tc1 = new TankControl(t1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_N);
         this.lf.getJf().addKeyListener(tc1);
@@ -203,14 +203,38 @@ public class GameWorld extends JPanel implements Runnable {
 //    }
 
     public void renderSplitScreen(Graphics2D g) {
-        BufferedImage lh = world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+        int t1CameraX, t1CameraY, t2CameraX, t2CameraY;
+//        if (validCameraPosition(this.t1), validCameraPosition(this.t2)) {
+//
+//        }
+
+//        if (this.t1.getX() <= ) {
+//            t1CameraX = (int) GameConstants.GAME_SCREEN_WIDTH/4;
+//        }
+
+        if ((int) this.t1.getX() <= GameConstants.GAME_SCREEN_WIDTH/4) {
+            System.out.println("AHHHHHHH");
+            t1CameraX = GameConstants.GAME_SCREEN_WIDTH/4;
+        } else {
+            t1CameraX = (int) this.t1.getX();
+        }
+
+        BufferedImage lh = world.getSubimage(
+                t1CameraX - GameConstants.GAME_SCREEN_WIDTH/4,
+                (int) this.t1.getY() - GameConstants.GAME_SCREEN_HEIGHT/2,
+                GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+
         BufferedImage rh = world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
 
         g.drawImage(lh, 0, 0, null);
         g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); // +4 adds padding between both screens
-        
+
 
     }
+
+//    private boolean validCameraPosition(Tank tank) {
+//        if ()
+//    }
 
 
     private void drawFloor(Graphics g) {
