@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
  * @author anthony-pc
  */
 public class Tank{ // normally player and tank are seperated
+    private float cameraX, cameraY;
 
     private float x;
     private float y;
@@ -154,21 +155,16 @@ public class Tank{ // normally player and tank are seperated
         return y;
     }
 
-//    public void centerScreen() {
-//        this.screenX = this.x - GameConstants.GAME_SCREEN_WIDTH;
-//        this.screenY = this.y - GameConstants.GAME_SCREEN_HEIGHT;
-//
-//        if (this.screenX < 0) this.screenX - 0;
-//        if (this.screenY < 0) this.screenY = 0;
-//        if (this.screenX > GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_WORLD_HEIGHT);
-//
-//    }
-//
-//    public float getY() {
-//        return this.y;
-//    }
-//
-//    public float getX() {
-//        return this.x;
-//    }
+    public void centerScreen() {
+        this.cameraX = this.x - GameConstants.GAME_SCREEN_WIDTH / 4.f;
+        this.cameraY = this.y - GameConstants.GAME_SCREEN_HEIGHT / 2.f;
+
+        if(this.cameraX < 0) this.cameraX = 0;
+        if(this.cameraY < 0) this.cameraY = 0;
+        if(this.cameraX > GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH/2){
+            this.cameraX = GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH/2;
+        }
+        if(this.cameraY > GameConstants.GAME_WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT){
+            this.cameraY = GameConstants.GAME_WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT;
+        }
 }
