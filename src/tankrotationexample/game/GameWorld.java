@@ -74,9 +74,13 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
+//        this.world = new BufferedImage(
+//                GameConstants.GAME_SCREEN_WIDTH,
+//                GameConstants.GAME_SCREEN_HEIGHT,
+//                BufferedImage.TYPE_INT_RGB); // floor image
         this.world = new BufferedImage(
-                GameConstants.GAME_SCREEN_WIDTH,
-                GameConstants.GAME_SCREEN_HEIGHT,
+                GameConstants.GAME_WORLD_WIDTH,
+                GameConstants.GAME_WORLD_HEIGHT,
                 BufferedImage.TYPE_INT_RGB); // floor image
 
         InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResourceAsStream("maps/TankMapConverted.csv")));
@@ -161,21 +165,29 @@ public class GameWorld extends JPanel implements Runnable {
 //    }
 
     static double miniMapScaleFactor = 0.2;
-//    public void renderMiniMap(Graphics2D g) {
-//        /*
-//        Goal:
-//        - draw square
-//        - position square
-//        -
-//         */
-//        BufferedImage mm = this.world.getSubImage(0, 0, GameConstants.GAME_WORLD_WIDTH, GameConstants.GAME_WORLD_HEIGHT);
-//
+    public void renderMiniMap(Graphics2D g) {
+        /*
+        Goal:
+        - draw square
+        - position square
+        -
+         */
+        //System.out.println("BREAKS1");
+        //System.out.println();
+        BufferedImage mm = this.world.getSubimage(0, 0, GameConstants.GAME_WORLD_WIDTH-1, GameConstants.GAME_WORLD_HEIGHT-1);
+        g.drawImage(mm, 0, 0, null);
+        g.scale(.2,.2);
+        g.drawImage(mm, 0, 0, null);
+
 //        var mmX = GameConstants.GAME_SCREEN_WIDTH/2 - GameConstants.GAME_WORLD_WIDTH*(miniMapScaleFactor)/2;
 //        var mmY = GameConstants.GAME_SCREEN_HEIGHT - (GameConstants.GAME_WORLD_HEIGHT*miniMapScaleFactor) - 35;
+//        System.out.println("BREAKS2");
 //        AffineTransform mmTransform = AffineTransform.getTranslateInstance(mmX, mmY);
 //        g.drawImage(mm, mmTransform, null);
-//        //ImageObserver(); // checks for changes in objects?
-//    }
+//        System.out.println("BREAKS3");
+
+        //ImageObserver(); // checks for changes in objects?
+    }
 //    public void renderSplitScreen(Graphics2D g) { // using get subimage, get equally sized sctions of the map for the cameras
 //        BufferedImage lh = this.world.getSubimage(this.t1.getX(), this.t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
 //        BufferedImage lh = this.world.getSubimage(this.t1.getX(), this.t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
@@ -201,6 +213,8 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics(); // all game objects draw to this buffer
 
         this.drawFloor(buffer);
+        //System.out.println(world.getHeight());
+        //System.out.println(world.getWidth());
 
         //placeholder code to get rid of trail with rendering black background
         //buffer.setColor(Color.black);
@@ -212,7 +226,8 @@ public class GameWorld extends JPanel implements Runnable {
         //this.anim.forEach(animation -> animation.update());
         //this.anim.forEach(animation -> animation.drawImage(buffer));
 
+        renderMiniMap(g2); // renders it to the screen instead of the gameScreen. Drawing to game screen draws map inside map.
+
         g2.drawImage(world, 0, 0, null);
-        //renderMiniMap(g2); // renders it to the screen instead of the gameScreen. Drawing to game screen draws map inside map.
     }
 }
