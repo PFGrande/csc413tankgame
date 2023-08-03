@@ -154,6 +154,29 @@ public class Tank{ // normally player and tank are seperated
         return y;
     }
 
+
+    public BufferedImage cameraPosition(BufferedImage world) {
+        int cameraX, cameraY;
+        BufferedImage screenSide;
+
+        if ((int) this.x <= GameConstants.GAME_SCREEN_WIDTH/4) {
+            System.out.println("AHHHHHHH");
+            cameraX = GameConstants.GAME_SCREEN_WIDTH/4;
+        } else {
+            cameraX = (int) this.x;
+        }
+
+        screenSide = world.getSubimage(
+                cameraX - GameConstants.GAME_SCREEN_WIDTH/4,
+                (int) this.y - GameConstants.GAME_SCREEN_HEIGHT/2,
+                GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+
+//        g.drawImage(screenSide, 0, 0, null);
+//        g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); // +4 adds padding between both screens
+
+        return screenSide;
+    }
+
 //    public void centerScreen() {
 //        this.screenX = this.x - GameConstants.GAME_SCREEN_WIDTH;
 //        this.screenY = this.y - GameConstants.GAME_SCREEN_HEIGHT;
