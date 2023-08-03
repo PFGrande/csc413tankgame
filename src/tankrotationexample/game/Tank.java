@@ -10,7 +10,8 @@ import java.awt.image.BufferedImage;
  * @author anthony-pc
  */
 public class Tank{ // normally player and tank are seperated
-
+    static int count = 0;
+    int id;
     private float x;
     private float y;
     private float vx = 0; // change in x
@@ -31,6 +32,8 @@ public class Tank{ // normally player and tank are seperated
         this.y = y;
         this.img = img;
         this.angle = angle;
+        count++;
+        id = count;
     }
 
     void setX(float x){ this.x = x; }
@@ -159,16 +162,32 @@ public class Tank{ // normally player and tank are seperated
         int cameraX, cameraY;
         BufferedImage screenSide;
 
-        if ((int) this.x <= GameConstants.GAME_SCREEN_WIDTH/4) {
-            System.out.println("AHHHHHHH");
+        if ((int) this.x <= GameConstants.GAME_SCREEN_WIDTH/4) { // checks if too far left
+            //System.out.println("AHHHHHHH");
             cameraX = GameConstants.GAME_SCREEN_WIDTH/4;
         } else {
             cameraX = (int) this.x;
         }
 
+//        if ((int) this.x >= GameConstants.GAME_SCREEN_WIDTH ) {
+//            cameraX = GameConstants.GAME_SCREEN_WIDTH;
+//        } else {
+//            cameraX = (int) this.x;
+//        }
+
+
+        if ((int) this.y <= GameConstants.GAME_SCREEN_HEIGHT/2) { // checks if too high up
+            System.out.println("too low");
+            cameraY = GameConstants.GAME_SCREEN_HEIGHT/2;
+        } else {
+            cameraY = (int) this.y;
+        }
+
+        System.out.println("TANK " + id + " " + cameraX + " " + cameraY);
+
         screenSide = world.getSubimage(
                 cameraX - GameConstants.GAME_SCREEN_WIDTH/4,
-                (int) this.y - GameConstants.GAME_SCREEN_HEIGHT/2,
+                cameraY - GameConstants.GAME_SCREEN_HEIGHT/2,
                 GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
 
 //        g.drawImage(screenSide, 0, 0, null);
