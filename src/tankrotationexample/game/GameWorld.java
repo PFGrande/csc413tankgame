@@ -181,6 +181,7 @@ public class GameWorld extends JPanel implements Runnable {
                 (GameConstants.GAME_SCREEN_WIDTH*5)/2 - (GameConstants.GAME_WORLD_WIDTH/2),
                 (GameConstants.GAME_SCREEN_HEIGHT*5) - (GameConstants.GAME_WORLD_HEIGHT) - 140, null);
 
+
 //        var mmX = GameConstants.GAME_SCREEN_WIDTH/2 - GameConstants.GAME_WORLD_WIDTH*(miniMapScaleFactor)/2;
 //        var mmY = GameConstants.GAME_SCREEN_HEIGHT - (GameConstants.GAME_WORLD_HEIGHT*miniMapScaleFactor) - 35;
 //        System.out.println("BREAKS2");
@@ -191,10 +192,25 @@ public class GameWorld extends JPanel implements Runnable {
         //ImageObserver(); // checks for changes in objects?
     }
 //    public void renderSplitScreen(Graphics2D g) { // using get subimage, get equally sized sctions of the map for the cameras
-//        BufferedImage lh = this.world.getSubimage(this.t1.getX(), this.t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-//        BufferedImage lh = this.world.getSubimage(this.t1.getX(), this.t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+//        //BufferedImage lh = this.world.getSubimage((int) this.t1.getX(), (int) this.t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+//        BufferedImage lh = this.world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+//
+//        //BufferedImage rh = this.world.getSubimage((int) this.t2.getX(), (int) this.t2.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+//        //g.drawImage(rh, 0, 0, null);
+//        g.scale(.2, .2);
+//        g.drawImage(lh, 0, 0, null);
 //
 //    }
+
+    public void renderSplitScreen(Graphics2D g) {
+        BufferedImage lh = world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+        BufferedImage rh = world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+
+        g.drawImage(lh, 0, 0, null);
+        g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); // +4 adds padding between both screens
+        
+
+    }
 
 
     private void drawFloor(Graphics g) {
@@ -215,21 +231,20 @@ public class GameWorld extends JPanel implements Runnable {
         Graphics2D buffer = world.createGraphics(); // all game objects draw to this buffer
 
         this.drawFloor(buffer);
-        //System.out.println(world.getHeight());
-        //System.out.println(world.getWidth());
 
-        //placeholder code to get rid of trail with rendering black background
-        //buffer.setColor(Color.black);
-        //buffer.fillRect(0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
         this.gobjs.forEach(gameObject -> gameObject.drawImage(buffer));
         this.t1.drawImage(buffer);
         this.t2.drawImage(buffer);
 
         //this.anim.forEach(animation -> animation.update());
         //this.anim.forEach(animation -> animation.drawImage(buffer));
-        g2.drawImage(world, 0, 0, null);
+        //g2.drawImage(world, 0, 0, null);
+
+        renderSplitScreen(g2);
         renderMiniMap(g2); // renders it to the screen instead of the gameScreen. Drawing to game screen draws map inside map.
 
+
+//        renderSplitScreen(g2);
         //g2.drawImage(world, 0, 0, null);
     }
 }
