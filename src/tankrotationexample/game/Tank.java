@@ -165,9 +165,9 @@ public class Tank{ // normally player and tank are seperated
         if ((int) this.x <= GameConstants.GAME_SCREEN_WIDTH/4) { // checks if too far left
             //System.out.println("AHHHHHHH");
             cameraX = GameConstants.GAME_SCREEN_WIDTH/4;
-        } else if ((int) this.x >= 3*(GameConstants.GAME_SCREEN_WIDTH/4)) {
-            cameraX = (3*(GameConstants.GAME_SCREEN_WIDTH/4))+30;
-        } else {
+        } else if ((int) this.x >= (3*(GameConstants.GAME_SCREEN_WIDTH/4))+((GameConstants.GAME_SCREEN_WIDTH/4)*2)) { // checks for right edge
+            cameraX = (3*(GameConstants.GAME_SCREEN_WIDTH/4))+((GameConstants.GAME_SCREEN_WIDTH/4)*2);
+        } else { // default behavior (follow tank)
             cameraX = (int) this.x;
         }
 
