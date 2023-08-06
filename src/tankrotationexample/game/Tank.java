@@ -27,6 +27,7 @@ public class Tank{ // normally player and tank are seperated
     private boolean DownPressed;
     private boolean RightPressed;
     private boolean LeftPressed;
+    private boolean shootPressed;
 
     Tank(float x, float y, float angle, BufferedImage img) {
         this.x = x;
@@ -189,5 +190,13 @@ public class Tank{ // normally player and tank are seperated
                 GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
 
         return screenSide;
+    }
+
+    public void toggleShootPressed() {
+        shootPressed = true;
+    }
+
+    public void untoggleShootPressed() {
+        shootPressed = false;
     }
 }
