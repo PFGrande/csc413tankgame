@@ -212,6 +212,10 @@ public class GameWorld extends JPanel implements Runnable {
 //            t1CameraX = (int) GameConstants.GAME_SCREEN_WIDTH/4;
 //        }
 
+        g.drawImage(t1.cameraPosition(world), 0, 0, null);
+        g.drawImage(t2.cameraPosition(world), GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null);
+
+/*
         if ((int) this.t1.getX() <= GameConstants.GAME_SCREEN_WIDTH/4) {
             System.out.println("AHHHHHHH");
             t1CameraX = GameConstants.GAME_SCREEN_WIDTH/4;
@@ -227,7 +231,10 @@ public class GameWorld extends JPanel implements Runnable {
         BufferedImage rh = world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
 
         g.drawImage(lh, 0, 0, null);
-        g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); // +4 adds padding between both screens
+        g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); */
+
+
+        // +4 adds padding between both screens
 
 
     }

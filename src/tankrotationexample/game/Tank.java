@@ -10,8 +10,9 @@ import java.awt.image.BufferedImage;
  * @author anthony-pc
  */
 public class Tank{ // normally player and tank are seperated
-    private float cameraX, cameraY;
-
+    //private float cameraX, cameraY;
+    static int count = 0;
+    int id;
     private float x;
     private float y;
     private float vx = 0; // change in x
@@ -32,6 +33,8 @@ public class Tank{ // normally player and tank are seperated
         this.y = y;
         this.img = img;
         this.angle = angle;
+        count++;
+        id = count;
     }
 
     void setX(float x){ this.x = x; }
@@ -154,17 +157,78 @@ public class Tank{ // normally player and tank are seperated
     public float getY() {
         return y;
     }
+//
+//    public void centerScreen() {
+//        this.cameraX = this.x - GameConstants.GAME_SCREEN_WIDTH / 4.f;
+//        this.cameraY = this.y - GameConstants.GAME_SCREEN_HEIGHT / 2.f;
+//
+//        if(this.cameraX < 0) this.cameraX = 0;
+//        if(this.cameraY < 0) this.cameraY = 0;
+//        if(this.cameraX > GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH/2){
+//            this.cameraX = GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH/2;
+//        }
+//        if(this.cameraY > GameConstants.GAME_WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT){
+//            this.cameraY = GameConstants.GAME_WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT;
+//        }
 
-    public void centerScreen() {
-        this.cameraX = this.x - GameConstants.GAME_SCREEN_WIDTH / 4.f;
-        this.cameraY = this.y - GameConstants.GAME_SCREEN_HEIGHT / 2.f;
+    public BufferedImage cameraPosition(BufferedImage world) {
+        int cameraX, cameraY;
+        BufferedImage screenSide;
 
-        if(this.cameraX < 0) this.cameraX = 0;
-        if(this.cameraY < 0) this.cameraY = 0;
-        if(this.cameraX > GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH/2){
-            this.cameraX = GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_SCREEN_WIDTH/2;
+        if ((int) this.x <= GameConstants.GAME_SCREEN_WIDTH/4) { // checks if too far left
+            //System.out.println("AHHHHHHH");
+            cameraX = GameConstants.GAME_SCREEN_WIDTH/4;
+        } else if ((int) this.x >= (3*(GameConstants.GAME_SCREEN_WIDTH/4))+((GameConstants.GAME_SCREEN_WIDTH/4)*2)) { // checks for right edge
+            cameraX = (3*(GameConstants.GAME_SCREEN_WIDTH/4))+((GameConstants.GAME_SCREEN_WIDTH/4)*2);
+        } else { // default behavior (follow tank)
+            cameraX = (int) this.x;
         }
-        if(this.cameraY > GameConstants.GAME_WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT){
-            this.cameraY = GameConstants.GAME_WORLD_HEIGHT - GameConstants.GAME_SCREEN_HEIGHT;
+
+//        if ((int) this.x >= GameConstants.GAME_SCREEN_WIDTH ) {
+//            cameraX = GameConstants.GAME_SCREEN_WIDTH;
+//        } else {
+//            cameraX = (int) this.x;
+//        }
+
+
+        if ((int) this.y <= GameConstants.GAME_SCREEN_HEIGHT/2) { // checks if too high up
+            System.out.println("too high");
+            cameraY = GameConstants.GAME_SCREEN_HEIGHT/2;
+        } else if (this.y >= GameConstants.GAME_SCREEN_HEIGHT) {
+            cameraY = GameConstants.GAME_SCREEN_HEIGHT;
+
+        } else {
+            cameraY = (int) this.y;
         }
+
+        //System.out.println("TANK " + id + " " + cameraX + " " + cameraY); debug position
+
+        screenSide = world.getSubimage(
+                cameraX - GameConstants.GAME_SCREEN_WIDTH/4,
+                cameraY - GameConstants.GAME_SCREEN_HEIGHT/2,
+                GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+
+//        g.drawImage(screenSide, 0, 0, null);
+//        g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); // +4 adds padding between both screens
+
+        return screenSide;
+    }
+
+//    public void centerScreen() {
+//        this.screenX = this.x - GameConstants.GAME_SCREEN_WIDTH;
+//        this.screenY = this.y - GameConstants.GAME_SCREEN_HEIGHT;
+//
+//        if (this.screenX < 0) this.screenX - 0;
+//        if (this.screenY < 0) this.screenY = 0;
+//        if (this.screenX > GameConstants.GAME_WORLD_WIDTH - GameConstants.GAME_WORLD_HEIGHT);
+//
+//    }
+//
+//    public float getY() {
+//        return this.y;
+//    }
+//
+//    public float getX() {
+//        return this.x;
+//    }
 }
