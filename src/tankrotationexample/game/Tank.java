@@ -179,8 +179,11 @@ public class Tank{ // normally player and tank are seperated
 
 
         if ((int) this.y <= GameConstants.GAME_SCREEN_HEIGHT/2) { // checks if too high up
-            System.out.println("too low");
+            System.out.println("too high");
             cameraY = GameConstants.GAME_SCREEN_HEIGHT/2;
+        } else if (this.y >= GameConstants.GAME_SCREEN_HEIGHT) {
+            cameraY = GameConstants.GAME_SCREEN_HEIGHT;
+
         } else {
             cameraY = (int) this.y;
         }
