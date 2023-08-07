@@ -15,6 +15,7 @@ public class Bullet extends GameObject {
     private float angle;
     private float R = 5;
     private int owner;
+    private Rectangle hitbox;
 
     public Bullet(float x, float y, BufferedImage sprite) {
         this.x = x;
@@ -22,7 +23,7 @@ public class Bullet extends GameObject {
         this.img = sprite;
         this.vx = 2;
         this.vy = 2;
-
+        this.hitbox = new Rectangle((int) x, (int) y, this.img.getWidth()*2, this.img.getHeight()*2);
     }
 
     void update() {
@@ -50,7 +51,7 @@ public class Bullet extends GameObject {
 
     //called when shoot is pressed. Spawns bullet at position
     public void spawnBullet(float x, float y, float angle) { // helper for getting bullet from resource pool
-        this.x = x+50;
+        this.x = x+17; // 17 = tank position relative to top left + (tank img width/2 - (bullet img width * 2)
         this.y = y+15;
         this.angle = angle;
     }
@@ -64,5 +65,10 @@ public class Bullet extends GameObject {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
 
+    }
+
+    @Override
+    public Rectangle getHitbox() {
+        return hitbox.getBounds();
     }
 }
