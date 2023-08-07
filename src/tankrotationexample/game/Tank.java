@@ -37,6 +37,8 @@ public class Tank{ // normally player and tank are seperated
     private boolean RightPressed;
     private boolean LeftPressed;
     private boolean shootPressed;
+    private long timeSinceLastShot = 0L;
+    private long cooldown = 2000;
 
     Tank(float x, float y, float angle, BufferedImage img) {
         this.x = x;
@@ -100,14 +102,15 @@ public class Tank{ // normally player and tank are seperated
             this.rotateRight();
         }
 
-        if (this.shootPressed) {
+        if (this.shootPressed && ((this.timeSinceLastShot + this.cooldown) < System.currentTimeMillis())) {
+            this.timeSinceLastShot = System.currentTimeMillis();
             Bullet temp = bulletPool.getResource();
             temp.spawnBullet(this.x, this.y, this.angle);
             this.ammo.add(temp);
-            System.out.println("SHOOT PRESSED");
+
         }
         this.ammo.forEach(Bullet::update);
-        System.out.println("AMMO UPDATED");
+
 
     }
 
@@ -165,10 +168,17 @@ public class Tank{ // normally player and tank are seperated
         if (!this.ammo.isEmpty()) {
             this.ammo.forEach(b -> b.drawImage(g2d));
         }
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.WHITE);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
+        //g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
 
+        g2d.drawRect((int)x-30,(int)y-20,100, 15); // place cooldown bar above tank
+        long currentWidth = 100 - ((this.timeSinceLastShot + this.cooldown) - System.currentTimeMillis())/20;
+        if (currentWidth > 100) {
+            currentWidth = 100;
+        }
+        g2d.setColor(Color.GREEN);
+        g2d.fillRect((int)x-30, (int)y-20, (int)currentWidth, 15);
     }
 
     public float getX() {
@@ -185,7 +195,6 @@ public class Tank{ // normally player and tank are seperated
 
         //check for x axis border
         if ((int) this.x <= GameConstants.GAME_SCREEN_WIDTH/4) { // checks if too far left
-            //System.out.println("AHHHHHHH");
             cameraX = GameConstants.GAME_SCREEN_WIDTH/4;
         } else if ((int) this.x >= (3*(GameConstants.GAME_SCREEN_WIDTH/4))+((GameConstants.GAME_SCREEN_WIDTH/4)*2)) { // checks for right edge
             cameraX = (3*(GameConstants.GAME_SCREEN_WIDTH/4))+((GameConstants.GAME_SCREEN_WIDTH/4)*2);
@@ -199,7 +208,6 @@ public class Tank{ // normally player and tank are seperated
             cameraY = GameConstants.GAME_SCREEN_HEIGHT/2;
         } else if (this.y >= GameConstants.GAME_SCREEN_HEIGHT) {
             cameraY = GameConstants.GAME_SCREEN_HEIGHT;
-
         } else {
             cameraY = (int) this.y;
         }
@@ -214,7 +222,6 @@ public class Tank{ // normally player and tank are seperated
 
     public void toggleShootPressed() {
         shootPressed = true;
-
     }
 
     public void untoggleShootPressed() {

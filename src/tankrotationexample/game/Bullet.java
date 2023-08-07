@@ -13,23 +13,23 @@ public class Bullet extends GameObject {
     private float vy;
     BufferedImage img;
     private float angle;
-    private float R;
+    private float R = 5;
     private int owner;
 
     public Bullet(float x, float y, BufferedImage sprite) {
         this.x = x;
         this.y = y;
         this.img = sprite;
-        this.vx = 0;
-        this.vy = 0;
+        this.vx = 2;
+        this.vy = 2;
 
     }
 
     void update() {
-        vx = Math.round(R * Math.cos(Math.toRadians(angle)));
-        vy = Math.round(R * Math.sin(Math.toRadians(angle)));
-        x += vx;
-        y += vy;
+        this.vx = Math.round(this.R * Math.cos(Math.toRadians(angle)));
+        this.vy = Math.round(this.R * Math.sin(Math.toRadians(angle)));
+        this.x += this.vx;
+        this.y += this.vy;
         checkBorder();
     }
 
