@@ -37,21 +37,21 @@ public class Bullet extends GameObject {
         if (x < 30) {
             x = 30;
         }
-        if (x >= GameConstants.GAME_WORLD_WIDTH - 88) {
-            x = GameConstants.GAME_WORLD_WIDTH - 88;
+        if (x >= GameConstants.GAME_WORLD_WIDTH - 45) {
+            x = GameConstants.GAME_WORLD_WIDTH - 45;
         }
-        if (y < 40) {
-            y = 40;
+        if (y < 30) {
+            y = 30;
         }
-        if (y >= GameConstants.GAME_WORLD_HEIGHT - 80) {
-            y = GameConstants.GAME_WORLD_HEIGHT - 80;
+        if (y >= GameConstants.GAME_WORLD_HEIGHT - 45) {
+            y = GameConstants.GAME_WORLD_HEIGHT - 45;
         }
     }
 
     //called when shoot is pressed. Spawns bullet at position
     public void spawnBullet(float x, float y, float angle) { // helper for getting bullet from resource pool
-        this.x = x;
-        this.y = y;
+        this.x = x+50;
+        this.y = y+15;
         this.angle = angle;
     }
 
