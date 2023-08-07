@@ -13,12 +13,13 @@ import java.util.List;
  *
  * @author anthony-pc
  */
-public class Tank{ // normally player and tank are seperated
+public class Tank extends GameObject{ // normally player and tank are seperated
     //private float cameraX, cameraY;
     private static ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
     static {
         bulletPool.fillPool(Bullet.class, 300);
     }
+    private int lives = 3;
     List<Bullet> ammo = new ArrayList<>();
     static int count = 0;
     int id;
@@ -39,6 +40,7 @@ public class Tank{ // normally player and tank are seperated
     private boolean shootPressed;
     private long timeSinceLastShot = 0L;
     private long cooldown = 2000;
+    Rectangle hitbox;
 
     Tank(float x, float y, float angle, BufferedImage img) {
         this.x = x;
@@ -46,7 +48,9 @@ public class Tank{ // normally player and tank are seperated
         this.img = img;
         this.angle = angle;
         count++;
-        id = count;
+        this.id = count;
+        this.hitbox = new Rectangle((int) x, (int) y, this.img.getWidth(), this.img.getHeight());
+
     }
 
     void setX(float x){ this.x = x; }
@@ -111,6 +115,7 @@ public class Tank{ // normally player and tank are seperated
         }
         this.ammo.forEach(Bullet::update);
 
+        this.hitbox.setLocation((int)this.x, (int)this.y);
 
     }
 
@@ -159,8 +164,8 @@ public class Tank{ // normally player and tank are seperated
         return "x=" + x + ", y=" + y + ", angle=" + angle;
     }
 
-
-    void drawImage(Graphics g) {
+    @Override
+    public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
@@ -226,5 +231,22 @@ public class Tank{ // normally player and tank are seperated
 
     public void untoggleShootPressed() {
         shootPressed = false;
+    }
+
+    @Override
+    public Rectangle getHitbox() {
+        return hitbox.getBounds();
+    }
+
+    @Override
+    public void collides(GameObject with) {
+        if (with instanceof Bullet) {
+            lives--;
+        } else if (with instanceof Wall) {
+            // stop
+        } else if (with instanceof PowerUp) {
+            ((PowerUp) with).activatePowerUp(this);
+        }
+
     }
 }

@@ -52,6 +52,7 @@ public class GameWorld extends JPanel implements Runnable {
                  * Sleep for 1000/144 ms (~6.9ms). This is done to have our 
                  * loop run at a fixed rate per/sec. 
                 */
+                checkCollision();
                 Thread.sleep(1000 / 144); // artificially slow game down to prevent it from updating too fast
             }
         } catch (InterruptedException ignored) {
@@ -124,6 +125,9 @@ public class GameWorld extends JPanel implements Runnable {
         TankControl tc2 = new TankControl(t2, KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L, KeyEvent.VK_N);
         this.lf.getJf().addKeyListener(tc1);
         this.lf.getJf().addKeyListener(tc2);
+        this.gobjs.add(t1);
+        this.gobjs.add(t2);
+
 
 //        anim.add(new Animation(ResourceManager.getAnimation()))
 
@@ -253,6 +257,21 @@ public class GameWorld extends JPanel implements Runnable {
 
 
 
+    }
+
+    private void checkCollision() {
+        for (int i = 0; i < gobjs.size(); i++) { // moving object collision
+            GameObject obj1 = gobjs.get(i);
+            if (obj1 instanceof Wall || obj1 instanceof PowerUp) continue; // for now continue
+            for (int j = 0; j < gobjs.size(); j++) { // other objects in world
+                if (i == j) continue; // prevents checking an object from collision with itself
+                GameObject obj2 = gobjs.get(j);
+
+                if (obj1.getHitbox().intersects(obj2.getHitbox())) {
+                    obj1.collides(obj2);
+                }
+            }
+        }
     }
 
 

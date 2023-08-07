@@ -32,6 +32,7 @@ public class Bullet extends GameObject {
         this.x += this.vx;
         this.y += this.vy;
         checkBorder();
+        this.hitbox.setLocation((int)this.x, (int)this.y);
     }
 
     private void checkBorder() { // game screen measurements should be changed to game world measurements
@@ -70,5 +71,11 @@ public class Bullet extends GameObject {
     @Override
     public Rectangle getHitbox() {
         return hitbox.getBounds();
+    }
+
+    @Override
+    public void collides(GameObject with) {
+        System.out.println("HIT");
+        //play animation
     }
 }
