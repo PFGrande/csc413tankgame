@@ -36,15 +36,15 @@ public class Bullet extends GameObject {
     private void checkBorder() { // game screen measurements should be changed to game world measurements
         if (x < 30) {
             x = 30;
-        }
-        if (x >= GameConstants.GAME_WORLD_WIDTH - 45) {
-            x = GameConstants.GAME_WORLD_WIDTH - 45;
+        } // 46 = wall img size + (bullet img size *2)
+        if (x >= GameConstants.GAME_WORLD_WIDTH - 46) {
+            x = GameConstants.GAME_WORLD_WIDTH - 46;
         }
         if (y < 30) {
             y = 30;
         }
-        if (y >= GameConstants.GAME_WORLD_HEIGHT - 45) {
-            y = GameConstants.GAME_WORLD_HEIGHT - 45;
+        if (y >= GameConstants.GAME_WORLD_HEIGHT - 46) {
+            y = GameConstants.GAME_WORLD_HEIGHT - 46;
         }
     }
 
