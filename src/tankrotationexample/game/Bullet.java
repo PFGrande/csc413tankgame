@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 public class Bullet extends GameObject {
     private float x;
     private float y;
-    private float vx = 3;
-    private float vy = 3;
+    private float vx;
+    private float vy;
     BufferedImage img;
     private float angle;
     private float R;
@@ -59,6 +59,7 @@ public class Bullet extends GameObject {
     public void drawImage(Graphics g) {
         //buffer.drawImage(this.img, (int)x, (int)y, null);
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
+        rotation.scale(2,2);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);

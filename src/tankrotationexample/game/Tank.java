@@ -6,6 +6,8 @@ import tankrotationexample.Resources.ResourcePool;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,7 +19,7 @@ public class Tank{ // normally player and tank are seperated
     static {
         bulletPool.fillPool(Bullet.class, 300);
     }
-    Bullet b;
+    List<Bullet> ammo = new ArrayList<>();
     static int count = 0;
     int id;
     private float x;
@@ -99,11 +101,13 @@ public class Tank{ // normally player and tank are seperated
         }
 
         if (this.shootPressed) {
-            this.b = bulletPool.getResource();
-            this.b.spawnBullet(this.x, this.y, this.angle);
-
+            Bullet temp = bulletPool.getResource();
+            temp.spawnBullet(this.x, this.y, this.angle);
+            this.ammo.add(temp);
+            System.out.println("SHOOT PRESSED");
         }
-
+        this.ammo.forEach(Bullet::update);
+        System.out.println("AMMO UPDATED");
 
     }
 
@@ -158,12 +162,13 @@ public class Tank{ // normally player and tank are seperated
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
+        if (!this.ammo.isEmpty()) {
+            this.ammo.forEach(b -> b.drawImage(g2d));
+        }
         g2d.setColor(Color.RED);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
         g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
-        if (b != null) {
-            this.b.drawImage(g2d);
-        }
+
     }
 
     public float getX() {
