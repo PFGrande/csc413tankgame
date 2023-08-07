@@ -1,6 +1,8 @@
 package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
+import tankrotationexample.Resources.ResourcePool;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -11,6 +13,11 @@ import java.awt.image.BufferedImage;
  */
 public class Tank{ // normally player and tank are seperated
     //private float cameraX, cameraY;
+    private static ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
+    static {
+        bulletPool.fillPool(Bullet.class, 300);
+    }
+    Bullet b;
     static int count = 0;
     int id;
     private float x;
@@ -91,6 +98,12 @@ public class Tank{ // normally player and tank are seperated
             this.rotateRight();
         }
 
+        if (this.shootPressed) {
+            this.b = bulletPool.getResource();
+            this.b.spawnBullet(this.x, this.y, this.angle);
+
+        }
+
 
     }
 
@@ -148,7 +161,9 @@ public class Tank{ // normally player and tank are seperated
         g2d.setColor(Color.RED);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
         g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
-
+        if (b != null) {
+            this.b.drawImage(g2d);
+        }
     }
 
     public float getX() {
@@ -194,6 +209,7 @@ public class Tank{ // normally player and tank are seperated
 
     public void toggleShootPressed() {
         shootPressed = true;
+
     }
 
     public void untoggleShootPressed() {

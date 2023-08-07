@@ -37,4 +37,8 @@ public class ResourcePool<T> {
         return this.pool.add(obj);
     }
 
+    public int getSize() {
+        return this.pool.size();
+    }
+
 }
