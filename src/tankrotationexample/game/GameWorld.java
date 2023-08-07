@@ -141,32 +141,7 @@ public class GameWorld extends JPanel implements Runnable {
 
      resource pool: prevent constant object creation in java
      synchronized list: ?
-
-
      */
-
-//    InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader()));
-//    try (BufferedReader mapReader = new BufferedReader(isr)) {
-//        int row = 0;
-//        String[] gameItems;
-//        while (mapReader.ready()) {
-//            gameItems = mapReader.readLine().strip().split(regex: ",")
-//        }
-//
-//    } catch (IOException e) {
-//        throw new RuntimeException(e);
-//    }
-
-//    public void renderFloor(Graphics g) {
-//        //g.drawImage(ResourceManager.getInstance(), 0, 0, GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
-//        for (int i = 0; i < GameConstants.GAME_WORLD_WIDTH; i+=320) { // faster, might have to do with scaling
-//            for (int j = 0; k < GameConstants.GAME_WORLD_HEIGHT; j+=240) {
-//                g.drawImage(ResourceManager.getSprite("floor"), i , j, null);
-//            }
-//
-//        }
-//
-//    }
 
     static double miniMapScaleFactor = 0.2;
     public void renderMiniMap(Graphics2D g) {
@@ -185,68 +160,16 @@ public class GameWorld extends JPanel implements Runnable {
                 (GameConstants.GAME_SCREEN_WIDTH*5)/2 - (GameConstants.GAME_WORLD_WIDTH/2),
                 (GameConstants.GAME_SCREEN_HEIGHT*5) - (GameConstants.GAME_WORLD_HEIGHT) - 140, null);
 
-
-//        var mmX = GameConstants.GAME_SCREEN_WIDTH/2 - GameConstants.GAME_WORLD_WIDTH*(miniMapScaleFactor)/2;
-//        var mmY = GameConstants.GAME_SCREEN_HEIGHT - (GameConstants.GAME_WORLD_HEIGHT*miniMapScaleFactor) - 35;
-//        System.out.println("BREAKS2");
-//        AffineTransform mmTransform = AffineTransform.getTranslateInstance(mmX, mmY);
-//        g.drawImage(mm, mmTransform, null);
-//        System.out.println("BREAKS3");
-
-        //ImageObserver(); // checks for changes in objects?
     }
-//    public void renderSplitScreen(Graphics2D g) { // using get subimage, get equally sized sctions of the map for the cameras
-//        //BufferedImage lh = this.world.getSubimage((int) this.t1.getX(), (int) this.t1.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-//        BufferedImage lh = this.world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-//
-//        //BufferedImage rh = this.world.getSubimage((int) this.t2.getX(), (int) this.t2.getY(), GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-//        //g.drawImage(rh, 0, 0, null);
-//        g.scale(.2, .2);
-//        g.drawImage(lh, 0, 0, null);
-//
-//    }
+
 
     public void renderSplitScreen(Graphics2D g) {
         int t1CameraX, t1CameraY, t2CameraX, t2CameraY;
-//        if (validCameraPosition(this.t1), validCameraPosition(this.t2)) {
-//
-//        }
-
-//        if (this.t1.getX() <= ) {
-//            t1CameraX = (int) GameConstants.GAME_SCREEN_WIDTH/4;
-//        }
-
         g.drawImage(t1.cameraPosition(world), 0, 0, null);
         g.drawImage(t2.cameraPosition(world), GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null);
 
-/*
-        if ((int) this.t1.getX() <= GameConstants.GAME_SCREEN_WIDTH/4) {
-            System.out.println("AHHHHHHH");
-            t1CameraX = GameConstants.GAME_SCREEN_WIDTH/4;
-        } else {
-            t1CameraX = (int) this.t1.getX();
-        }
-
-        BufferedImage lh = world.getSubimage(
-                t1CameraX - GameConstants.GAME_SCREEN_WIDTH/4,
-                (int) this.t1.getY() - GameConstants.GAME_SCREEN_HEIGHT/2,
-                GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-
-        BufferedImage rh = world.getSubimage(0, 0, GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-
-        g.drawImage(lh, 0, 0, null);
-        g.drawImage(rh, GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null); */
-
-
-        // +4 adds padding between both screens
-
 
     }
-
-//    private boolean validCameraPosition(Tank tank) {
-//        if ()
-//    }
-
 
     private void drawFloor(Graphics g) {
         for (int i = 0; i < GameConstants.GAME_WORLD_WIDTH; i+= 320) {
@@ -297,4 +220,13 @@ public class GameWorld extends JPanel implements Runnable {
 //        renderSplitScreen(g2);
         //g2.drawImage(world, 0, 0, null);
     }
+
+    /**
+     * TODO:
+     * make GameWorld aware of bullets
+     * Add Wall Collision Detection
+     * Remove Tank class from being directly instanciated in GameWorld
+     *      put it in the gameOBJ list through the map?
+     *      Make spawn points on map, randomly choose one before spawning tanks
+     */
 }
