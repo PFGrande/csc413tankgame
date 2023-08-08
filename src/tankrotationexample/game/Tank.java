@@ -303,37 +303,6 @@ public class Tank extends GameObject{ // normally player and tank are seperated
 
             this.vy = 0;
             this.y -=10*temp;
-
-
-
-
-
-
-
-//
-//            System.out.println("TANK:   " + this.x);
-//            System.out.println("WALL:   " + ((Wall) with).getX());
-//            System.out.println("DIFFERENCE   :  " + ((((Wall) with).getX() - this.x)));
-//
-//            System.out.println("NEW POS:  " + (this.x - (((Wall) with).getX() - this.x)));
-//
-//            Rectangle collisionAt = hitbox.intersection(((Wall) with).hitbox);
-//            this.x = this.x -  (((Wall) with).getX() - this.x);
-
-
-
-
-            //S
-            // ystem.out.println(vx);
-            //System.out.println(collisionAt.x);
-            //System.out.println(collisionAt.y);
-
-
-            //this.x = (float) (((Wall) with).getX() - (Math.toRadians(Math.cos(angle))));
-//            this.vx = (Math.round(R * Math.cos(Math.toRadians(angle))));
-//            this.x -= this.vx;
-//            this.vy = Math.round(R * Math.sin(Math.toRadians(angle)));
-//            this.y -= this.vx;
         } else if (with instanceof PowerUp) {
             ((PowerUp) with).activatePowerUp(this);
         }
