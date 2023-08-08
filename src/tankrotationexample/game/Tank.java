@@ -252,6 +252,8 @@ public class Tank extends GameObject{ // normally player and tank are seperated
 
             System.out.println(vx);
             int temp = 0;
+
+            // CLEAN UP THIS CODE LATER MAKE IT A METHOD
             if (vx < 0) {
 //                temp = -1;
                 if (this.UpPressed) {
@@ -276,6 +278,31 @@ public class Tank extends GameObject{ // normally player and tank are seperated
 
             this.vx = 0;
             this.x -=10*temp;
+
+            if (vy < 0) {
+//                temp = -1;
+                if (this.UpPressed) {
+                    temp = -1;
+                    unToggleUpPressed();
+                } else if (this.DownPressed) {
+                    temp=1;
+                    unToggleDownPressed();
+                }
+
+            } else if (vy > 0) {
+                if (this.UpPressed) {
+                    temp = 1;
+                    unToggleUpPressed();
+                } else if (this.DownPressed) {
+                    temp = -1;
+                    unToggleDownPressed();
+                }
+                //temp = 1;
+
+            }
+
+            this.vy = 0;
+            this.y -=10*temp;
 
 
 
