@@ -16,6 +16,7 @@ public class Bullet extends GameObject {
     private float R = 5;
     private int owner;
     private Rectangle hitbox;
+    private boolean collisionStatus;
 
     public Bullet(float x, float y, BufferedImage sprite) {
         this.x = x;
@@ -52,7 +53,7 @@ public class Bullet extends GameObject {
 
     //called when shoot is pressed. Spawns bullet at position
     public void spawnBullet(float x, float y, float angle) { // helper for getting bullet from resource pool
-        this.x = x+17; // 17 = tank position relative to top left + (tank img width/2 - (bullet img width * 2)
+        this.x = x+17; // 17 = tank position relative to top left + (tank img width/2 - (bullet img width * 2) (might be /2)
         this.y = y+15;
         this.angle = angle;
     }
@@ -68,6 +69,15 @@ public class Bullet extends GameObject {
 
     }
 
+
+
+    public boolean getCollisionStatus() { // used to remove bullets from list
+        return collisionStatus;
+    }
+
+    public void setCollisionStatus(boolean collisionStatus) { // used in other classes to update the status
+        this.collisionStatus = collisionStatus;
+    }
     @Override
     public Rectangle getHitbox() {
         return hitbox.getBounds();

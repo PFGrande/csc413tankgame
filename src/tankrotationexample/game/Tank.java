@@ -29,7 +29,7 @@ public class Tank extends GameObject{ // normally player and tank are seperated
     private float vy = 0; // change in y
     private float angle; // way tank is facing
 
-    private float R = 5;
+    private float R = 5; // movement speed
     private float ROTATIONSPEED = 3.0f;
 
     private BufferedImage img;
@@ -90,6 +90,9 @@ public class Tank extends GameObject{ // normally player and tank are seperated
     }
 
     void update() {
+        //System.out.println(vx);
+        //System.out.println(Math.toRadians(Math.cos(angle)));
+
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -243,7 +246,67 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         if (with instanceof Bullet) {
             lives--;
         } else if (with instanceof Wall) {
-            // stop
+            // boost pad code:
+//            this.x = this.x - 2f;
+//            this.vx =0;
+
+            System.out.println(vx);
+            int temp = 0;
+            if (vx < 0) {
+//                temp = -1;
+                if (this.UpPressed) {
+                    temp = -1;
+                    unToggleUpPressed();
+                } else if (this.DownPressed) {
+                    temp=1;
+                    unToggleDownPressed();
+                }
+
+            } else if (vx > 0) {
+                if (this.UpPressed) {
+                    temp = 1;
+                    unToggleUpPressed();
+                } else if (this.DownPressed) {
+                    temp = -1;
+                    unToggleDownPressed();
+                }
+                //temp = 1;
+
+            }
+
+            this.vx = 0;
+            this.x -=10*temp;
+
+
+
+
+
+
+
+//
+//            System.out.println("TANK:   " + this.x);
+//            System.out.println("WALL:   " + ((Wall) with).getX());
+//            System.out.println("DIFFERENCE   :  " + ((((Wall) with).getX() - this.x)));
+//
+//            System.out.println("NEW POS:  " + (this.x - (((Wall) with).getX() - this.x)));
+//
+//            Rectangle collisionAt = hitbox.intersection(((Wall) with).hitbox);
+//            this.x = this.x -  (((Wall) with).getX() - this.x);
+
+
+
+
+            //S
+            // ystem.out.println(vx);
+            //System.out.println(collisionAt.x);
+            //System.out.println(collisionAt.y);
+
+
+            //this.x = (float) (((Wall) with).getX() - (Math.toRadians(Math.cos(angle))));
+//            this.vx = (Math.round(R * Math.cos(Math.toRadians(angle))));
+//            this.x -= this.vx;
+//            this.vy = Math.round(R * Math.sin(Math.toRadians(angle)));
+//            this.y -= this.vx;
         } else if (with instanceof PowerUp) {
             ((PowerUp) with).activatePowerUp(this);
         }

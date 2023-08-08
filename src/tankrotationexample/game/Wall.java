@@ -31,4 +31,12 @@ public class Wall extends GameObject {
     public void collides(GameObject with) {
         //stop?
     }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
 }

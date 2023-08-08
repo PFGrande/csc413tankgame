@@ -223,10 +223,14 @@ public class GameWorld extends JPanel implements Runnable {
 
     /**
      * TODO:
-     * make GameWorld aware of bullets
-     * Add Wall Collision Detection
-     * Remove Tank class from being directly instanciated in GameWorld
-     *      put it in the gameOBJ list through the map?
-     *      Make spawn points on map, randomly choose one before spawning tanks
+     * - make GameWorld aware of bullets
+     *      - Cant have bulletpool here because it would need to know when tank is shooting.
+     *      - Check bullet collision with tank inside the tank class? Would allow for removing
+     *          bullets from the ammo array and deleting them.
+     * - Add Wall Collision Detection
+     * - Remove Tank class from being directly instanciated in GameWorld
+     *      - put it in the gameOBJ list through the map?
+     *      - Make spawn points on map, randomly choose one before spawning tanks
+     *
      */
 }
