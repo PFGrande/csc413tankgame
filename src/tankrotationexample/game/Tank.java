@@ -250,7 +250,7 @@ public class Tank extends GameObject{ // normally player and tank are seperated
 //            this.x = this.x - 2f;
 //            this.vx =0;
 
-            System.out.println(vx);
+            //System.out.println(vx);
             int temp = 0;
 
             // CLEAN UP THIS CODE LATER MAKE IT A METHOD
