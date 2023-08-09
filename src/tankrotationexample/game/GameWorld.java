@@ -53,6 +53,7 @@ public class GameWorld extends JPanel implements Runnable {
                  * loop run at a fixed rate per/sec. 
                 */
                 checkCollision();
+
                 Thread.sleep(1000 / 144); // artificially slow game down to prevent it from updating too fast
             }
         } catch (InterruptedException ignored) {
@@ -63,7 +64,7 @@ public class GameWorld extends JPanel implements Runnable {
     /**
      * Reset game to its initial state.
      */
-    public void resetGame() { // reminder to add tank 2 to this
+    public void resetGame() {
         // spawn powerups and walls
         //this.tick = 0;
         this.t1.setX(300);
@@ -85,6 +86,7 @@ public class GameWorld extends JPanel implements Runnable {
                 BufferedImage.TYPE_INT_RGB); // floor image
 
         InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResourceAsStream("maps/TankMapConverted.csv")));
+        //InputStreamReader isr = new InputStreamReader(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResourceAsStream("maps/TankMapSpawns.csv"))); // random spawns map
 
 
         // 0 = empty space
@@ -105,6 +107,14 @@ public class GameWorld extends JPanel implements Runnable {
 //                    System.out.println(gameItems[column]); // debugging
                     String gameObj = gameItems[column];
                     if ("0".equals(gameObj)) continue; // skip over 0s
+//                    if ("1".equals(gameObj)) {
+//                        this.t1.addSpawn(column*30, row*30);
+//                        continue;
+//                    }
+//                    if ("2".equals(gameObj)) {
+//                        this.t2.addSpawn(column*30, row*30);
+//                        continue;
+//                    }
                     this.gobjs.add(GameObject.newInstance(gameObj, column*30, row*30));
                     // position objects using the row and column values
 

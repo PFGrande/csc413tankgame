@@ -8,7 +8,8 @@ import java.awt.geom.AffineTransform;
 public abstract class GameObject {
 
     public static GameObject newInstance(String type, float x, float y) throws UnsupportedOperationException {
-
+        // add spawn points to map
+        // add method to tank that randomly chooses spawn point when it dies
         return switch (type) {
             case "9", "3" -> new Wall(x, y, ResourceManager.getSprite("unbreak"));
             default -> throw new UnsupportedOperationException();

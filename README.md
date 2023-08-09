@@ -25,7 +25,7 @@ The jar folder is to be used to store the built jar of your term-project.
 
 ## Version of Java Used:
 
-## IDE used: 
+## IDE used: IntelliJ Idea
 
 ## Steps to Import project into IDE:
 
@@ -41,6 +41,6 @@ The jar folder is to be used to store the built jar of your term-project.
 |  Backward     | s        | k        |
 |  Rotate left  | a        | j        |
 |  Rotate Right | d        | l        |
-|  Shoot        | c        | n        |
+|  Shoot        | space    | n        |
 
 <!-- you may add more controls if you need to. -->

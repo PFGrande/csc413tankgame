@@ -1,6 +1,7 @@
 package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
+import tankrotationexample.Resources.Pair;
 import tankrotationexample.Resources.ResourcePool;
 
 import java.awt.*;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public class Tank extends GameObject{ // normally player and tank are seperated
     //private float cameraX, cameraY;
+    private List<Pair<Integer, Integer>> spawns = new ArrayList<Pair<Integer, Integer>>();
     private static ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
     static {
         bulletPool.fillPool(Bullet.class, 300);
@@ -245,7 +247,8 @@ public class Tank extends GameObject{ // normally player and tank are seperated
     public void collides(GameObject with) {
 
         if (with instanceof Bullet) {
-            lives--;
+            this.lives--;
+            System.out.println("TANK " + this.id + "   " + this.lives);
         } else if (with instanceof Wall) {
             //this.unToggleUpPressed();
             //this.unToggleDownPressed();
@@ -275,6 +278,13 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         } else if (with instanceof PowerUp) {
             ((PowerUp) with).activatePowerUp(this);
         }
+
+    }
+
+    public void addSpawn(int x, int y) {
+        Pair<Integer,Integer> spawn = new Pair<>(x, y);
+
+        spawns.add(spawn);
 
     }
 }
