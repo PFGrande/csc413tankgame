@@ -247,13 +247,25 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         if (with instanceof Bullet) {
             lives--;
         } else if (with instanceof Wall) {
-            this.unToggleUpPressed();
-            this.unToggleDownPressed();
+            //this.unToggleUpPressed();
+            //this.unToggleDownPressed();
             Rectangle collidesAt = with.getHitbox().intersection(this.hitbox);
 //            if (collidesAt.x >= this.x) {
+            this.vx = 0;
+            this.vy = 0;
+            if (this.UpPressed) {
+                unToggleUpPressed();
+                this.x = (float) (this.x - 10*Math.cos(Math.toRadians(angle)));
+                this.y = (float) (this.y - 10*Math.sin(Math.toRadians(angle)));
+                toggleUpPressed();
+            } else if (this.DownPressed) {
+                unToggleDownPressed();
+                this.x = (float) (this.x + 10*Math.cos(Math.toRadians(angle)));
+                this.y = (float) (this.y + 10*Math.sin(Math.toRadians(angle)));
+                toggleDownPressed();
+            }
 
-            this.x = (float) (this.x - 2*Math.cos(Math.toRadians(angle)));
-            this.y = (float) (this.y - 2*Math.sin(Math.toRadians(angle)));
+
                 //System.out.println(Math.cos(Math.toRadians(angle)));
 
             //}
