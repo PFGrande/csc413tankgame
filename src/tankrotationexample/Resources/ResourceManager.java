@@ -36,6 +36,9 @@ public class ResourceManager {
             ResourceManager.sprites.put("rocket2", loadSprite("bullet/rocket2.png"));
             ResourceManager.sprites.put("floor", loadSprite("floor/bg.bmp"));
             ResourceManager.sprites.put("unbreak", loadSprite("walls/unbreak.jpg"));
+            ResourceManager.sprites.put("health", loadSprite("powerups/health.png"));
+            ResourceManager.sprites.put("shield", loadSprite("powerups/shield.png"));
+            ResourceManager.sprites.put("speed", loadSprite("powerups/speed.png"));
 
 
         } catch (IOException e) {
