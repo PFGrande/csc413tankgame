@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author anthony-pc
  */
-public class Tank extends GameObject{ // normally player and tank are seperated
+public class Tank extends GameObject implements MovableObjects{ // normally player and tank are seperated
     //private float cameraX, cameraY;
     private List<Pair<Integer, Integer>> spawns = new ArrayList<Pair<Integer, Integer>>();
     private static ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
@@ -22,7 +22,7 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         bulletPool.fillPool(Bullet.class, 300);
     }
     private int lives = 3;
-    List<Bullet> ammo = new ArrayList<>();
+    //List<Bullet> ammo = new ArrayList<>();
     static int count = 0;
     int id;
     private float x;
@@ -43,6 +43,7 @@ public class Tank extends GameObject{ // normally player and tank are seperated
     private long timeSinceLastShot = 0L;
     private long cooldown = 2000;
     Rectangle hitbox;
+    private boolean canShoot;
 
     Tank(float x, float y, float angle, BufferedImage img) {
         this.x = x;
@@ -91,7 +92,8 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         this.LeftPressed = false;
     }
 
-    void update() {
+    public void update() {
+        //updateGameObjBullets(world);
         //System.out.println(vx);
         //System.out.println(Math.toRadians(Math.cos(angle)));
 
@@ -112,13 +114,16 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         }
 
         if (this.shootPressed && ((this.timeSinceLastShot + this.cooldown) < System.currentTimeMillis())) {
+            canShoot = true;
             this.timeSinceLastShot = System.currentTimeMillis();
-            Bullet temp = bulletPool.getResource();
-            temp.spawnBullet(this.x, this.y, this.angle);
-            this.ammo.add(temp);
-
+//            Bullet temp = bulletPool.getResource();
+//            temp.spawnBullet(this.x, this.y, this.angle);
+//            this.ammo.add(temp);
+            //addBulletToGameObjs(world);
+        } else {
+            canShoot = false;
         }
-        this.ammo.forEach(Bullet::update);
+        //this.ammo.forEach(Bullet::update);
 
         this.hitbox.setLocation((int)this.x, (int)this.y);
 
@@ -175,9 +180,9 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-        if (!this.ammo.isEmpty()) {
-            this.ammo.forEach(b -> b.drawImage(g2d));
-        }
+//        if (!this.ammo.isEmpty()) {
+//            this.ammo.forEach(b -> b.drawImage(g2d));
+//        }
         g2d.setColor(Color.WHITE);
         //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
         //g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
@@ -287,4 +292,15 @@ public class Tank extends GameObject{ // normally player and tank are seperated
         spawns.add(spawn);
 
     }
+
+    public Bullet addBulletToGameObjs() { // this could be the shoot action
+        if (canShoot) {
+            Bullet temp = bulletPool.getResource();
+            temp.spawnBullet(this.x, this.y, this.angle);
+//        this.ammo.add(temp);
+            return temp;
+        }
+        return null;
+    }
+
 }

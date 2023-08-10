@@ -6,7 +6,10 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Bullet extends GameObject {
+// Note to self: when the professor says work with abstractions at higher level class, I believe he refers to abstracting other classes
+// to make the highest level class work almost sole on abstractions
+
+public class Bullet extends GameObject implements MovableObjects {
     private float x;
     private float y;
     private float vx;
@@ -16,7 +19,7 @@ public class Bullet extends GameObject {
     private float R = 5;
     private int owner;
     private Rectangle hitbox;
-    private boolean collisionStatus;
+    private boolean collisionStatus = false;
 
     public Bullet(float x, float y, BufferedImage sprite) {
         this.x = x;
@@ -27,7 +30,7 @@ public class Bullet extends GameObject {
         this.hitbox = new Rectangle((int) x, (int) y, this.img.getWidth()*2, this.img.getHeight()*2);
     }
 
-    void update() {
+    public void update() {
         this.vx = Math.round(this.R * Math.cos(Math.toRadians(angle)));
         this.vy = Math.round(this.R * Math.sin(Math.toRadians(angle)));
         this.x += this.vx;
@@ -75,9 +78,9 @@ public class Bullet extends GameObject {
         return collisionStatus;
     }
 
-    public void setCollisionStatus(boolean collisionStatus) { // used in other classes to update the status
-        this.collisionStatus = collisionStatus;
-    }
+    //public void setCollisionStatus(boolean collisionStatus) { // used in other classes to update the status
+    //    this.collisionStatus = collisionStatus;
+    //}
     @Override
     public Rectangle getHitbox() {
         return hitbox.getBounds();
@@ -86,6 +89,10 @@ public class Bullet extends GameObject {
     @Override
     public void collides(GameObject with) {
         System.out.println("HIT");
+        if (this.hitbox.intersects(with.getHitbox())) {
+            //play animation and sound?
+            collisionStatus = true; // has collided with another object
+        }
         //play animation
     }
 }

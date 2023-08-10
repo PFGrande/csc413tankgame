@@ -15,9 +15,8 @@ import java.awt.image.ImageObserver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * @author anthony-pc
@@ -28,10 +27,13 @@ public class GameWorld extends JPanel implements Runnable {
     private Tank t1;
     private Tank t2;
     private final Launcher lf;
+    public int worldSize;
 
     List<GameObject> gobjs = new ArrayList<>();
     //private long tick = 0; // for tick logic, not necessary to be used.
     List<Animation> anim = new ArrayList<>();
+
+    private boolean isDrawing = true;
 
     /**
      *
@@ -45,20 +47,54 @@ public class GameWorld extends JPanel implements Runnable {
         try {
             while (true) {
                 //this.tick++;
-                this.t1.update(); // update tank
-                this.t2.update();
+//                this.t1.update(); // update tank
+//                this.t2.update();
+                updateObjs();
+                checkCollision();
                 this.repaint();   // redraw game, never call paint component directly; repaint happens on different thread
                 /*
                  * Sleep for 1000/144 ms (~6.9ms). This is done to have our 
                  * loop run at a fixed rate per/sec. 
                 */
-                checkCollision();
+
 
                 Thread.sleep(1000 / 144); // artificially slow game down to prevent it from updating too fast
             }
         } catch (InterruptedException ignored) {
             System.out.println(ignored);
         }
+    }
+
+    public synchronized void updateObjs() {
+        Iterator<GameObject> objItr = gobjs.iterator();
+        GameObject currentObj;
+        Queue<GameObject> toAdd = new LinkedList<>();
+
+        while (objItr.hasNext()) {
+            currentObj = objItr.next();
+            if (currentObj instanceof MovableObjects) {
+                ((MovableObjects) currentObj).update();
+            }
+
+            if (currentObj instanceof Tank) {
+                GameObject temp = ((Tank) currentObj).addBulletToGameObjs();
+                if (temp != null) {
+                    toAdd.add(temp);
+
+                }
+
+            } // else if (currentObj instanceof Bullet) {
+//                if (((Bullet) currentObj).getCollisionStatus()) {
+//                    objItr.remove();
+//                }
+            //}
+
+        }
+
+        for (GameObject bullet : toAdd) {
+            gobjs.add(toAdd.remove());
+        }
+
     }
 
     /**
@@ -76,10 +112,6 @@ public class GameWorld extends JPanel implements Runnable {
      * initial state as well.
      */
     public void InitializeGame() {
-//        this.world = new BufferedImage(
-//                GameConstants.GAME_SCREEN_WIDTH,
-//                GameConstants.GAME_SCREEN_HEIGHT,
-//                BufferedImage.TYPE_INT_RGB); // floor image
         this.world = new BufferedImage(
                 GameConstants.GAME_WORLD_WIDTH,
                 GameConstants.GAME_WORLD_HEIGHT,
@@ -107,14 +139,6 @@ public class GameWorld extends JPanel implements Runnable {
 //                    System.out.println(gameItems[column]); // debugging
                     String gameObj = gameItems[column];
                     if ("0".equals(gameObj)) continue; // skip over 0s
-//                    if ("1".equals(gameObj)) {
-//                        this.t1.addSpawn(column*30, row*30);
-//                        continue;
-//                    }
-//                    if ("2".equals(gameObj)) {
-//                        this.t2.addSpawn(column*30, row*30);
-//                        continue;
-//                    }
                     this.gobjs.add(GameObject.newInstance(gameObj, column*30, row*30));
                     // position objects using the row and column values
 
@@ -174,11 +198,8 @@ public class GameWorld extends JPanel implements Runnable {
 
 
     public void renderSplitScreen(Graphics2D g) {
-        int t1CameraX, t1CameraY, t2CameraX, t2CameraY;
         g.drawImage(t1.cameraPosition(world), 0, 0, null);
         g.drawImage(t2.cameraPosition(world), GameConstants.GAME_SCREEN_WIDTH/2+4, 0, null);
-
-
     }
 
     private void drawFloor(Graphics g) {
@@ -216,8 +237,9 @@ public class GameWorld extends JPanel implements Runnable {
         this.drawFloor(buffer);
 
         this.gobjs.forEach(gameObject -> gameObject.drawImage(buffer));
-        this.t1.drawImage(buffer);
-        this.t2.drawImage(buffer);
+        //this.t1.drawImage(buffer);
+        //
+        // this.t2.drawImage(buffer);
 
         //this.anim.forEach(animation -> animation.update());
         //this.anim.forEach(animation -> animation.drawImage(buffer));
