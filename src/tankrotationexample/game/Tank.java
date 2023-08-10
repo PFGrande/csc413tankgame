@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Tank extends GameObject implements MovableObjects{ // normally player and tank are seperated
     //private float cameraX, cameraY;
-    private List<Pair<Integer, Integer>> spawns = new ArrayList<Pair<Integer, Integer>>();
+    private List<PowerUp> activeBuffs = new ArrayList<>(); //power ups
     private static ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
     static {
         bulletPool.fillPool(Bullet.class, 300);
@@ -92,6 +92,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     }
 
     public void update() {
+        //updateBuffs(); // updates status before moving tank
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -266,15 +267,14 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             }
 
         } else if (with instanceof PowerUp) {
-            ((PowerUp) with).activatePowerUp(this);
+            //((PowerUp) with).activatePowerUp(this);
+            if (with instanceof SpeedPowerUp) {
+                ((SpeedPowerUp) with).setActivationHealth(this.lives);
+                this.R += 2;
+            }
+
+            activeBuffs.add((PowerUp) with);
         }
-
-    }
-
-    public void addSpawn(int x, int y) {
-        Pair<Integer,Integer> spawn = new Pair<>(x, y);
-
-        spawns.add(spawn);
 
     }
 
@@ -294,6 +294,18 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     @Override
     public boolean expired() { // tank expires when lives is 0
         return this.lives <= 0;
+    }
+
+    private void updateBuffs() {
+        for (PowerUp powerUp : this.activeBuffs) {
+            if (powerUp.isActive(this.lives)) {
+                PowerUp temp = powerUp;
+                activeBuffs.remove(powerUp);
+                if (temp instanceof SpeedPowerUp) {
+                    this.R -= 2;
+                }
+            }
+        }
     }
 
 }

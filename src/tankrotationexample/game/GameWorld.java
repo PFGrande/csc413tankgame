@@ -96,15 +96,23 @@ public class GameWorld extends JPanel implements Runnable {
                 }
             }
 
+            if (currentObj instanceof PowerUp) {
+                System.out.println("powerup");
+                if (((PowerUp) currentObj).expired()) {
+                    System.out.println("remove powerup from map");
+                    toRemove.add(currentObj);
+                }
+            }
+
 
 
         }
 
-        for (GameObject bullet : toAdd) {
+        for (GameObject toSpawn : toAdd) {
             gobjs.add(toAdd.remove());
             System.out.println("Bullet ADDED");
         }
-        for (GameObject bullet : toRemove) {
+        for (GameObject toDespawn : toRemove) {
             gobjs.remove(toRemove.remove());
         }
 //        for (GameObject bullet : toRemove) { // removes references to bullet from both lists so it despawns
@@ -240,7 +248,7 @@ public class GameWorld extends JPanel implements Runnable {
         for (int i = 0; i < gobjs.size(); i++) { // moving object collision
             GameObject obj1 = gobjs.get(i);
             //if (obj1 instanceof Wall || obj1 instanceof PowerUp) continue; // for now continue
-            if (!(obj1 instanceof MovableObjects)) continue;
+            if (!(obj1 instanceof MovableObjects) && !(obj1 instanceof PowerUp)) continue;
             for (int j = 0; j < gobjs.size(); j++) { // other objects in world
                 if (i == j) continue; // prevents checking an object from collision with itself
                 GameObject obj2 = gobjs.get(j);
