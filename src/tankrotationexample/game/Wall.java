@@ -20,6 +20,7 @@ public class Wall extends GameObject {
     @Override
     public void drawImage(Graphics buffer) {
         buffer.drawImage(this.img, (int)x, (int)y, null);
+        buffer.drawRect((int)this.x,(int)this.y, this.img.getWidth(), this.img.getHeight());
 
     }
     @Override

@@ -32,6 +32,8 @@ public class Bullet extends GameObject implements MovableObjects {
     }
 
     public void update() {
+        //System.out.println("UPDATE STATUS:   " + collisionStatus + "   " + this.x + "    " + this.y);
+
         this.vx = Math.round(this.R * Math.cos(Math.toRadians(angle)));
         this.vy = Math.round(this.R * Math.sin(Math.toRadians(angle)));
         this.x += this.vx;
@@ -57,6 +59,7 @@ public class Bullet extends GameObject implements MovableObjects {
 
     //called when shoot is pressed. Spawns bullet at position
     public void spawnBullet(float x, float y, float angle, int owner) { // helper for getting bullet from resource pool
+
         this.x = x+17; // 17 = tank position relative to top left + (tank img width/2 - (bullet img width * 2) (might be /2)
         this.y = y+15;
         this.angle = angle;
@@ -80,9 +83,9 @@ public class Bullet extends GameObject implements MovableObjects {
 
 
 
-    public boolean getCollisionStatus() { // used to remove bullets from list
-        return collisionStatus;
-    }
+    //public boolean getCollisionStatus() { // used to remove bullets from list
+    //  return collisionStatus;
+   // }
 
     //public void setCollisionStatus(boolean collisionStatus) { // used in other classes to update the status
     //    this.collisionStatus = collisionStatus;
@@ -95,19 +98,21 @@ public class Bullet extends GameObject implements MovableObjects {
     @Override
     public void collides(GameObject with) {
         if (with instanceof Tank) { // object collision with tank
-            if (((Tank) with).getId() == this.owner) {
-                collisionStatus = false;
-                System.out.println("HIT SELF");
-            }
-        } else if (!(with instanceof Bullet)) {
-            collisionStatus = true;
-            System.out.println("HIT SOMETHING ELSE ENTIRELY");
+            //System.out.println("HIT SELF");
+            collisionStatus = ((Tank) with).getId() != this.owner;
+        } else if (with instanceof Wall) {
+            //collisionStatus = true;
+            System.out.println(with.getClass());
+            System.out.println(((Wall) with).hitbox.intersection(this.hitbox).getX());
+            //System.out.println("HIT SOMETHING ELSE ENTIRELY");
         }
         //play animation
     }
 
     @Override
     public boolean expired() {
+        //System.out.println("EXPIRATION STATUS:   " + collisionStatus + "   " + this.x + "    " + this.y);
         return collisionStatus;
+
     }
 }

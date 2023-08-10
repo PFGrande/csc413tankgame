@@ -76,26 +76,34 @@ public class GameWorld extends JPanel implements Runnable {
             currentObj = objItr.next();
             if (currentObj instanceof MovableObjects) {
                 ((MovableObjects) currentObj).update();
-                if (((MovableObjects) currentObj).expired()) {
-                    toRemove.add(currentObj);
+
+                if (currentObj instanceof Bullet) {
+                    if (((MovableObjects) currentObj).expired()) {
+                        toRemove.add(currentObj);
+                    }
+                }
+
+                if (currentObj instanceof Tank) {
+                    GameObject temp = ((Tank) currentObj).addBulletToGameObjs();
+                    if (temp != null) {
+                        toAdd.add(temp);
+                    }
+                    if (((Tank) currentObj).expired()) {
+                        gameOver();
+                    }
                 }
             }
 
-            if (currentObj instanceof Tank) {
-                GameObject temp = ((Tank) currentObj).addBulletToGameObjs();
-                if (temp != null) {
-                    toAdd.add(temp);
-                }
-                if (((Tank) currentObj).expired()) {
-                    gameOver();
-                }
-            }
+
 
         }
 
         for (GameObject bullet : toAdd) {
             gobjs.add(toAdd.remove());
             System.out.println("Bullet ADDED");
+        }
+        for (GameObject bullet : toRemove) {
+            gobjs.remove(toRemove.remove());
         }
 //        for (GameObject bullet : toRemove) { // removes references to bullet from both lists so it despawns
 //            gobjs.remove(toRemove.remove());
