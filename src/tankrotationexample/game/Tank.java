@@ -309,7 +309,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     public Bullet addBulletToGameObjs() { // this could be the shoot action
         if (canShoot) {
             Bullet temp = bulletPool.getResource();
-            temp.spawnBullet(this.x, this.y, this.angle, this.id);
+            temp.spawnBullet(this.x, this.y, this.angle, this.id); // do NOT understand why this did not correct for the bullet being at 0,0 when the bullet was spawned.
 //        this.ammo.add(temp);
             return temp;
         }

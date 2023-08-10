@@ -45,15 +45,19 @@ public class Bullet extends GameObject implements MovableObjects {
     private void checkBorder() { // game screen measurements should be changed to game world measurements
         if (x < 30) {
             x = 30;
+            this.collisionStatus = true;
         } // 46 = wall img size + (bullet img size *2)
         if (x >= GameConstants.GAME_WORLD_WIDTH - 46) {
             x = GameConstants.GAME_WORLD_WIDTH - 46;
+            this.collisionStatus = true;
         }
         if (y < 30) {
             y = 30;
+            this.collisionStatus = true;
         }
         if (y >= GameConstants.GAME_WORLD_HEIGHT - 46) {
             y = GameConstants.GAME_WORLD_HEIGHT - 46;
+            this.collisionStatus = true;
         }
     }
 
@@ -97,14 +101,21 @@ public class Bullet extends GameObject implements MovableObjects {
 
     @Override
     public void collides(GameObject with) {
+
+        //
+        // System.out.println("COLLISION CALL =========");
         if (with instanceof Tank) { // object collision with tank
             //System.out.println("HIT SELF");
-            collisionStatus = ((Tank) with).getId() != this.owner;
-        } else if (with instanceof Wall) {
-            //collisionStatus = true;
             System.out.println(with.getClass());
-            System.out.println(((Wall) with).hitbox.intersection(this.hitbox).getX());
-            //System.out.println("HIT SOMETHING ELSE ENTIRELY");
+            collisionStatus = ((Tank) with).getId() != this.owner;
+        }
+
+        if (with instanceof Wall) {
+            collisionStatus = true;
+
+//             Bug was somehow caused by bulletPool
+//            System.out.println("BULLET " + this.x + " " +this.y);
+//            System.out.println("WALL " + ((Wall) with).getX() + " " + ((Wall) with).getY() + " ");
         }
         //play animation
     }
