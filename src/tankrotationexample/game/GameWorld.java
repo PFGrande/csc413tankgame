@@ -33,7 +33,7 @@ public class GameWorld extends JPanel implements Runnable {
     //private long tick = 0; // for tick logic, not necessary to be used.
     List<Animation> anim = new ArrayList<>();
 
-    private boolean isDrawing = true;
+    private boolean isRunning = true;
 
     /**
      *
@@ -45,7 +45,7 @@ public class GameWorld extends JPanel implements Runnable {
     @Override
     public void run() { // check collisions here
         try {
-            while (true) {
+            while (isRunning) {
                 //this.tick++;
 //                this.t1.update(); // update tank
 //                this.t2.update();
@@ -63,6 +63,7 @@ public class GameWorld extends JPanel implements Runnable {
         } catch (InterruptedException ignored) {
             System.out.println(ignored);
         }
+        this.lf.setFrame("end");
     }
 
     public synchronized void updateObjs() {
@@ -85,6 +86,9 @@ public class GameWorld extends JPanel implements Runnable {
                 if (temp != null) {
                     toAdd.add(temp);
                 }
+                if (((Tank) currentObj).expired()) {
+                    gameOver();
+                }
             }
 
         }
@@ -93,11 +97,15 @@ public class GameWorld extends JPanel implements Runnable {
             gobjs.add(toAdd.remove());
             System.out.println("Bullet ADDED");
         }
-        for (GameObject bullet : toRemove) { // removes references to bullet from both lists so it despawns
-            gobjs.remove(toRemove.remove());
-            System.out.println("bullet removed");
-        }
+//        for (GameObject bullet : toRemove) { // removes references to bullet from both lists so it despawns
+//            gobjs.remove(toRemove.remove());
+//            System.out.println("bullet removed");
+//        }
 
+    }
+
+    private void gameOver() {
+        this.isRunning = false;
     }
 
     /**

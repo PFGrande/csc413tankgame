@@ -194,6 +194,15 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         }
         g2d.setColor(Color.GREEN);
         g2d.fillRect((int)x-30, (int)y-20, (int)currentWidth, 15);
+
+
+        for (int i = this.lives; i > 0; i--) {
+            g2d.setColor(Color.RED);
+            g2d.fillRect((int)x+(15*i), (int)y+70, 25, 15);
+            g2d.setColor(Color.BLACK);
+            g2d.drawRect((int)x+(15*i),(int)y+70,25, 15); // place cooldown bar above tank
+        }
+
     }
 
     public float getX() {
@@ -231,6 +240,8 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
                 cameraX - GameConstants.GAME_SCREEN_WIDTH/4,
                 cameraY - GameConstants.GAME_SCREEN_HEIGHT/2,
                 GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
+
+
 
         return screenSide;
     }
@@ -310,7 +321,10 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     }
 
     @Override
-    public boolean expired() { // tank does not expire
+    public boolean expired() { // tank expires when lives is 0
+        if (this.lives <= 0) {
+            return true;
+        }
         return false;
     }
 
