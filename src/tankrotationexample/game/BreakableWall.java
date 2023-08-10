@@ -1,12 +1,15 @@
 package tankrotationexample.game;
 
+import tankrotationexample.Resources.ResourceManager;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BreakableWall extends Wall/*extends Wall*/ {
     private float x;
     private float y;
-    BufferedImage img;
+    private BufferedImage img;
+    private boolean isBroken = false;
     public BreakableWall(float x, float y, BufferedImage sprite) {
         super(x, y, sprite);
         this.x = x;
@@ -23,6 +26,15 @@ public class BreakableWall extends Wall/*extends Wall*/ {
     @Override
     public Rectangle getHitbox() {
         return hitbox.getBounds();
+    }
+
+    public void updateImage() { // called in BulletClass
+        this.isBroken = true;
+        this.img = ResourceManager.getSprite("broken");
+    }
+
+    public boolean getIsBroken() {
+        return this.isBroken;
     }
 
     @Override

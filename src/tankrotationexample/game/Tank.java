@@ -254,19 +254,13 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             }
             System.out.println("TANK " + this.id + "   " + this.lives);
         } else if (with instanceof Wall) {
-            this.vx = 0;
-            this.vy = 0;
-            if (this.UpPressed) {
-                unToggleUpPressed();
-                this.x = (float) (this.x - 10*Math.cos(Math.toRadians(angle)));
-                this.y = (float) (this.y - 10*Math.sin(Math.toRadians(angle)));
-                toggleUpPressed();
-            } else if (this.DownPressed) {
-                unToggleDownPressed();
-                this.x = (float) (this.x + 10*Math.cos(Math.toRadians(angle)));
-                this.y = (float) (this.y + 10*Math.sin(Math.toRadians(angle)));
-                toggleDownPressed();
+            if (with instanceof BreakableWall && ((BreakableWall) with).getIsBroken()) { // if wall broken
+                return;
+            } else {
+                wallCollision();
             }
+
+
 
         } else if (with instanceof PowerUp) {
             //((PowerUp) with).activatePowerUp(this);
@@ -312,6 +306,22 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
 
         for (PowerUp powerUp : toRemove) {
             this.activeBuffs.remove(powerUp);
+        }
+    }
+
+    private void wallCollision() {
+        this.vx = 0;
+        this.vy = 0;
+        if (this.UpPressed) {
+            unToggleUpPressed();
+            this.x = (float) (this.x - 10*Math.cos(Math.toRadians(angle)));
+            this.y = (float) (this.y - 10*Math.sin(Math.toRadians(angle)));
+            toggleUpPressed();
+        } else if (this.DownPressed) {
+            unToggleDownPressed();
+            this.x = (float) (this.x + 10 * Math.cos(Math.toRadians(angle)));
+            this.y = (float) (this.y + 10 * Math.sin(Math.toRadians(angle)));
+            toggleDownPressed();
         }
     }
 
