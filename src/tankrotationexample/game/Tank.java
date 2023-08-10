@@ -8,7 +8,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  *
@@ -92,7 +94,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     }
 
     public void update() {
-        //updateBuffs(); // updates status before moving tank
+        updateBuffs(); // updates status before moving tank
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -297,14 +299,19 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     }
 
     private void updateBuffs() {
+        Queue<PowerUp> toRemove = new LinkedList<>();
+
         for (PowerUp powerUp : this.activeBuffs) {
-            if (powerUp.isActive(this.lives)) {
-                PowerUp temp = powerUp;
-                activeBuffs.remove(powerUp);
-                if (temp instanceof SpeedPowerUp) {
+            if (!powerUp.isActive(this.lives)) {
+                toRemove.add(powerUp);
+                if (powerUp instanceof SpeedPowerUp) {
                     this.R -= 2;
                 }
             }
+        }
+
+        for (PowerUp powerUp : toRemove) {
+            this.activeBuffs.remove(powerUp);
         }
     }
 
