@@ -22,7 +22,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         bulletPool.fillPool(Bullet.class, 300);
     }
     private int lives = 3;
-    //List<Bullet> ammo = new ArrayList<>();
     static int count = 0;
     int id;
     private float x;
@@ -93,10 +92,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     }
 
     public void update() {
-        //updateGameObjBullets(world);
-        //System.out.println(vx);
-        //System.out.println(Math.toRadians(Math.cos(angle)));
-
         if (this.UpPressed) {
             this.moveForwards();
         }
@@ -116,10 +111,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         if (this.shootPressed && ((this.timeSinceLastShot + this.cooldown) < System.currentTimeMillis())) {
             canShoot = true;
             this.timeSinceLastShot = System.currentTimeMillis();
-//            Bullet temp = bulletPool.getResource();
-//            temp.spawnBullet(this.x, this.y, this.angle);
-//            this.ammo.add(temp);
-            //addBulletToGameObjs(world);
         } else {
             canShoot = false;
         }
@@ -180,12 +171,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.img, rotation, null);
-//        if (!this.ammo.isEmpty()) {
-//            this.ammo.forEach(b -> b.drawImage(g2d));
-//        }
         g2d.setColor(Color.WHITE);
-        //g2d.rotate(Math.toRadians(angle), bounds.x + bounds.width/2, bounds.y + bounds.height/2);
-        //g2d.drawRect((int)x,(int)y,this.img.getWidth(), this.img.getHeight());
 
         g2d.drawRect((int)x-30,(int)y-20,100, 15); // place cooldown bar above tank
         long currentWidth = 100 - ((this.timeSinceLastShot + this.cooldown) - System.currentTimeMillis())/20;
@@ -228,7 +214,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
 
         //check for y axis border
         if ((int) this.y <= GameConstants.GAME_SCREEN_HEIGHT/2) { // checks if too high up
-            //System.out.println("too high");
             cameraY = GameConstants.GAME_SCREEN_HEIGHT/2;
         } else if (this.y >= GameConstants.GAME_SCREEN_HEIGHT) {
             cameraY = GameConstants.GAME_SCREEN_HEIGHT;
@@ -240,8 +225,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
                 cameraX - GameConstants.GAME_SCREEN_WIDTH/4,
                 cameraY - GameConstants.GAME_SCREEN_HEIGHT/2,
                 GameConstants.GAME_SCREEN_WIDTH/2, GameConstants.GAME_SCREEN_HEIGHT);
-
-
 
         return screenSide;
     }
@@ -268,10 +251,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             }
             System.out.println("TANK " + this.id + "   " + this.lives);
         } else if (with instanceof Wall) {
-            //this.unToggleUpPressed();
-            //this.unToggleDownPressed();
-            Rectangle collidesAt = with.getHitbox().intersection(this.hitbox);
-//            if (collidesAt.x >= this.x) {
             this.vx = 0;
             this.vy = 0;
             if (this.UpPressed) {
@@ -286,13 +265,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
                 toggleDownPressed();
             }
 
-
-                //System.out.println(Math.cos(Math.toRadians(angle)));
-
-            //}
-
-            //this.toggleDownPressed();
-            //this.toggleUpPressed();
         } else if (with instanceof PowerUp) {
             ((PowerUp) with).activatePowerUp(this);
         }
@@ -310,7 +282,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         if (canShoot) {
             Bullet temp = bulletPool.getResource();
             temp.spawnBullet(this.x, this.y, this.angle, this.id); // do NOT understand why this did not correct for the bullet being at 0,0 when the bullet was spawned.
-//        this.ammo.add(temp);
             return temp;
         }
         return null;
@@ -322,10 +293,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
 
     @Override
     public boolean expired() { // tank expires when lives is 0
-        if (this.lives <= 0) {
-            return true;
-        }
-        return false;
+        return this.lives <= 0;
     }
 
 }
