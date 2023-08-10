@@ -32,13 +32,11 @@ public class Bullet extends GameObject implements MovableObjects {
     }
 
     public void update() {
-        //System.out.println("UPDATE STATUS:   " + collisionStatus + "   " + this.x + "    " + this.y);
-
         this.vx = Math.round(this.R * Math.cos(Math.toRadians(angle)));
         this.vy = Math.round(this.R * Math.sin(Math.toRadians(angle)));
         this.x += this.vx;
         this.y += this.vy;
-        checkBorder();
+
         this.hitbox.setLocation((int)this.x, (int)this.y);
     }
 
@@ -76,7 +74,6 @@ public class Bullet extends GameObject implements MovableObjects {
 
     @Override
     public void drawImage(Graphics g) {
-        //buffer.drawImage(this.img, (int)x, (int)y, null);
         AffineTransform rotation = AffineTransform.getTranslateInstance(x, y);
         rotation.scale(2,2);
         rotation.rotate(Math.toRadians(angle), this.img.getWidth() / 2.0, this.img.getHeight() / 2.0);
@@ -85,15 +82,6 @@ public class Bullet extends GameObject implements MovableObjects {
 
     }
 
-
-
-    //public boolean getCollisionStatus() { // used to remove bullets from list
-    //  return collisionStatus;
-   // }
-
-    //public void setCollisionStatus(boolean collisionStatus) { // used in other classes to update the status
-    //    this.collisionStatus = collisionStatus;
-    //}
     @Override
     public Rectangle getHitbox() {
         return hitbox.getBounds();
@@ -102,28 +90,18 @@ public class Bullet extends GameObject implements MovableObjects {
     @Override
     public void collides(GameObject with) {
 
-        //
-        // System.out.println("COLLISION CALL =========");
         if (with instanceof Tank) { // object collision with tank
-            //System.out.println("HIT SELF");
             System.out.println(with.getClass());
             collisionStatus = ((Tank) with).getId() != this.owner;
         }
 
         if (with instanceof Wall) {
             collisionStatus = true;
-
-//             Bug was somehow caused by bulletPool
-//            System.out.println("BULLET " + this.x + " " +this.y);
-//            System.out.println("WALL " + ((Wall) with).getX() + " " + ((Wall) with).getY() + " ");
         }
-        //play animation
     }
 
     @Override
     public boolean expired() {
-        //System.out.println("EXPIRATION STATUS:   " + collisionStatus + "   " + this.x + "    " + this.y);
         return collisionStatus;
-
     }
 }
