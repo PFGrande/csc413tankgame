@@ -19,7 +19,7 @@ public class Bullet extends GameObject implements MovableObjects {
     private float R = 5;
     private int owner;
     private Rectangle hitbox;
-    private boolean collisionStatus = false;
+    private boolean hasCollided = false;
 
 
     public Bullet(float x, float y, BufferedImage sprite) {
@@ -43,19 +43,19 @@ public class Bullet extends GameObject implements MovableObjects {
     private void checkBorder() { // game screen measurements should be changed to game world measurements
         if (x < 30) {
             x = 30;
-            this.collisionStatus = true;
+            this.hasCollided = true;
         } // 46 = wall img size + (bullet img size *2)
         if (x >= GameConstants.GAME_WORLD_WIDTH - 46) {
             x = GameConstants.GAME_WORLD_WIDTH - 46;
-            this.collisionStatus = true;
+            this.hasCollided = true;
         }
         if (y < 30) {
             y = 30;
-            this.collisionStatus = true;
+            this.hasCollided = true;
         }
         if (y >= GameConstants.GAME_WORLD_HEIGHT - 46) {
             y = GameConstants.GAME_WORLD_HEIGHT - 46;
-            this.collisionStatus = true;
+            this.hasCollided = true;
         }
     }
 
@@ -92,16 +92,16 @@ public class Bullet extends GameObject implements MovableObjects {
 
         if (with instanceof Tank) { // object collision with tank
             System.out.println(with.getClass());
-            collisionStatus = ((Tank) with).getId() != this.owner;
+            hasCollided = ((Tank) with).getId() != this.owner;
         }
 
         if (with instanceof Wall) {
-            collisionStatus = true;
+            hasCollided = true;
         }
     }
 
     @Override
     public boolean expired() {
-        return collisionStatus;
+        return hasCollided;
     }
 }
