@@ -94,8 +94,6 @@ public class Bullet extends GameObject implements MovableObjects {
 
     @Override
     public void collides(GameObject with) {
-        //collisionStatus = true; // has collided with another object
-
         if (with instanceof Tank) { // object collision with tank
             if (((Tank) with).getId() == this.owner) {
                 collisionStatus = false;
@@ -106,5 +104,10 @@ public class Bullet extends GameObject implements MovableObjects {
             System.out.println("HIT SOMETHING ELSE ENTIRELY");
         }
         //play animation
+    }
+
+    @Override
+    public boolean expired() {
+        return collisionStatus;
     }
 }

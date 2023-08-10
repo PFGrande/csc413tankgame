@@ -309,4 +309,9 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         return this.id;
     }
 
+    @Override
+    public boolean expired() { // tank does not expire
+        return false;
+    }
+
 }

@@ -69,30 +69,33 @@ public class GameWorld extends JPanel implements Runnable {
         Iterator<GameObject> objItr = gobjs.iterator();
         GameObject currentObj;
         Queue<GameObject> toAdd = new LinkedList<>();
+        Queue<GameObject> toRemove = new LinkedList<>();
 
         while (objItr.hasNext()) {
             currentObj = objItr.next();
             if (currentObj instanceof MovableObjects) {
                 ((MovableObjects) currentObj).update();
+                if (((MovableObjects) currentObj).expired()) {
+                    toRemove.add(currentObj);
+                }
             }
 
             if (currentObj instanceof Tank) {
                 GameObject temp = ((Tank) currentObj).addBulletToGameObjs();
                 if (temp != null) {
                     toAdd.add(temp);
-
                 }
-
-            } // else if (currentObj instanceof Bullet) {
-//                if (((Bullet) currentObj).getCollisionStatus()) {
-//                    objItr.remove();
-//                }
-            //}
+            }
 
         }
 
         for (GameObject bullet : toAdd) {
             gobjs.add(toAdd.remove());
+            System.out.println("Bullet ADDED");
+        }
+        for (GameObject bullet : toRemove) { // removes references to bullet from both lists so it despawns
+            gobjs.remove(toRemove.remove());
+            System.out.println("bullet removed");
         }
 
     }
@@ -214,9 +217,12 @@ public class GameWorld extends JPanel implements Runnable {
     }
 
     private void checkCollision() {
+        //Queue<GameObject> toRemove = new LinkedList<GameObject>();
+
         for (int i = 0; i < gobjs.size(); i++) { // moving object collision
             GameObject obj1 = gobjs.get(i);
-            if (obj1 instanceof Wall || obj1 instanceof PowerUp) continue; // for now continue
+            //if (obj1 instanceof Wall || obj1 instanceof PowerUp) continue; // for now continue
+            if (!(obj1 instanceof MovableObjects)) continue;
             for (int j = 0; j < gobjs.size(); j++) { // other objects in world
                 if (i == j) continue; // prevents checking an object from collision with itself
                 GameObject obj2 = gobjs.get(j);
