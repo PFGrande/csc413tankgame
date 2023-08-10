@@ -63,6 +63,8 @@ public class GameWorld extends JPanel implements Runnable {
         } catch (InterruptedException ignored) {
             System.out.println(ignored);
         }
+        //this.lf.setFrame("end"); doesnt actually end run function
+        this.lf.killGame();
         this.lf.setFrame("end");
     }
 

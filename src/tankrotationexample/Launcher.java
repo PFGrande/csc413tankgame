@@ -43,6 +43,7 @@ public class Launcher {
      * used for our game. It will be attached to the main panel.
      */
     private CardLayout cl;
+    private Thread gameThread;
 
     public Launcher(){
         this.jf = new JFrame();             // creating a new JFrame object
@@ -87,7 +88,11 @@ public class Launcher {
                 this.jf.setSize(GameConstants.GAME_SCREEN_WIDTH, GameConstants.GAME_SCREEN_HEIGHT);
                 //start a new thread for the game to run. This will ensure our JFrame is responsive and
                 // not stuck executing the game loop.
-                (new Thread(this.gamePanel)).start(); // starts game on new thread, preventing it from running on UI thread
+                gameThread = new Thread(this.gamePanel);
+                //(new Thread(this.gamePanel)).start(); // starts game on new thread, preventing it from running on UI thread
+                gameThread.start();
+
+
             }
             case "end" ->
                 // set the size of the jFrame to the expected size for the end panel
@@ -105,6 +110,9 @@ public class Launcher {
         this.jf.dispatchEvent(new WindowEvent(this.jf, WindowEvent.WINDOW_CLOSING));
     }
 
+    public void killGame () {
+        gameThread.interrupt();
+    }
     public static void main(String[] args) {
         ResourceManager.loadResources();
         (new Launcher()).initUIComponents();
