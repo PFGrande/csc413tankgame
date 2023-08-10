@@ -252,7 +252,9 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     public void collides(GameObject with) {
 
         if (with instanceof Bullet) {
-            this.lives--;
+            if (((Bullet) with).getOwner() != this.id) {
+                this.lives--;
+            }
             System.out.println("TANK " + this.id + "   " + this.lives);
         } else if (with instanceof Wall) {
             //this.unToggleUpPressed();
@@ -296,11 +298,15 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     public Bullet addBulletToGameObjs() { // this could be the shoot action
         if (canShoot) {
             Bullet temp = bulletPool.getResource();
-            temp.spawnBullet(this.x, this.y, this.angle);
+            temp.spawnBullet(this.x, this.y, this.angle, this.id);
 //        this.ammo.add(temp);
             return temp;
         }
         return null;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
 }

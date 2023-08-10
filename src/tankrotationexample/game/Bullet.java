@@ -21,6 +21,7 @@ public class Bullet extends GameObject implements MovableObjects {
     private Rectangle hitbox;
     private boolean collisionStatus = false;
 
+
     public Bullet(float x, float y, BufferedImage sprite) {
         this.x = x;
         this.y = y;
@@ -55,10 +56,15 @@ public class Bullet extends GameObject implements MovableObjects {
     }
 
     //called when shoot is pressed. Spawns bullet at position
-    public void spawnBullet(float x, float y, float angle) { // helper for getting bullet from resource pool
+    public void spawnBullet(float x, float y, float angle, int owner) { // helper for getting bullet from resource pool
         this.x = x+17; // 17 = tank position relative to top left + (tank img width/2 - (bullet img width * 2) (might be /2)
         this.y = y+15;
         this.angle = angle;
+        this.owner = owner;
+    }
+
+    public int getOwner() {
+        return this.owner;
     }
 
     @Override
@@ -88,10 +94,16 @@ public class Bullet extends GameObject implements MovableObjects {
 
     @Override
     public void collides(GameObject with) {
-        System.out.println("HIT");
-        if (this.hitbox.intersects(with.getHitbox())) {
-            //play animation and sound?
-            collisionStatus = true; // has collided with another object
+        //collisionStatus = true; // has collided with another object
+
+        if (with instanceof Tank) { // object collision with tank
+            if (((Tank) with).getId() == this.owner) {
+                collisionStatus = false;
+                System.out.println("HIT SELF");
+            }
+        } else if (!(with instanceof Bullet)) {
+            collisionStatus = true;
+            System.out.println("HIT SOMETHING ELSE ENTIRELY");
         }
         //play animation
     }
