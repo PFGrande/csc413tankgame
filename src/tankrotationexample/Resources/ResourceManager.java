@@ -16,7 +16,7 @@ public class ResourceManager {
     private final static Map<String, BufferedImage> sprites = new HashMap<String, BufferedImage>();
     private final static Map<String, List<BufferedImage>> animations = new HashMap<String, List<BufferedImage>>();;
     //private final static Map<String, Sound> sounds = new HashMap<String, Clip>();
-    private static final Map<String, Integer> animationInfo = new HashMap<String, Integer>() {{
+    private static final Map<String, Integer> animationInfo = new HashMap<String, Integer>() {{ // animation name, num of frames
         put("bullethit", 24);
         put("bulletshoot", 24);
         put("powerpick", 32);
@@ -47,16 +47,37 @@ public class ResourceManager {
             throw new RuntimeException(e);
         }
         //BufferedImage t = ImageIO.read(ResourceManager.class.getClassLoader().getResource("tank1.png"));
+    }
+
+    private static void initAnimations() {
+
+            String baseName = "animations/%s/%s_%04d.png";
+            animationInfo.forEach((animationName, frameCount) -> {
+                List<BufferedImage> frames = new ArrayList<BufferedImage>();
+                try {
+                    for (int i = 0; i < frameCount; i++) {
+                        String spritePath = baseName.formatted(animationName, animationName, i);
+                        frames.add(loadSprite(spritePath));
+                    }
+
+                    ResourceManager.animations.put(animationName, frames);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            });
 
 
     }
 
     public static void loadResources() {
         ResourceManager.initSprites();
+        ResourceManager.initAnimations();
     }
 
     public static void main(String[] args) { // test assets loading
-        ResourceManager.initSprites();
+        //ResourceManager.initSprites();
+        ResourceManager.loadResources();
         //ResourceManager.initAnimations();
 //        ResourceManager.initSounds();
 
@@ -73,8 +94,11 @@ public class ResourceManager {
         return ResourceManager.sprites.get(type);
     }
 
-    private static BufferedImage loadSprite(String path) throws IOException {
+    public static List<BufferedImage> getAnimation(String type) {
+        return ResourceManager.animations.get(type);
+    }
 
+    private static BufferedImage loadSprite(String path) throws IOException {
         return ImageIO.read(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource(path), "Unable to find image at path: %s".formatted(path)));
     }
 
@@ -93,10 +117,6 @@ public class ResourceManager {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    public static List<BufferedImage> getAnimation(String animationName) {
-        return animations.get(animationName);
     }
 
 //    private static Sound loadSound(String path) throws UnsupportedAudioFileException, IOException {

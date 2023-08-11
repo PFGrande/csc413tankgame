@@ -31,7 +31,7 @@ public class GameWorld extends JPanel implements Runnable {
 
     List<GameObject> gobjs = new ArrayList<>();
     //private long tick = 0; // for tick logic, not necessary to be used.
-    List<Animation> anim = new ArrayList<>();
+    List<Animation> anims = new ArrayList<>();
 
     private boolean isRunning = true;
 
@@ -41,6 +41,7 @@ public class GameWorld extends JPanel implements Runnable {
     public GameWorld(Launcher lf) {
         this.lf = lf;
     }
+    //Animation an = new Animation(300, 300, ResourceManager.getAnimation("bullethit"));
 
     @Override
     public void run() { // check collisions here
@@ -51,6 +52,7 @@ public class GameWorld extends JPanel implements Runnable {
 //                this.t2.update();
                 updateObjs();
                 checkCollision();
+                //an.update();
                 this.repaint();   // redraw game, never call paint component directly; repaint happens on different thread
                 /*
                  * Sleep for 1000/144 ms (~6.9ms). This is done to have our 
@@ -81,6 +83,7 @@ public class GameWorld extends JPanel implements Runnable {
 
                 if (currentObj instanceof Bullet) {
                     if (((MovableObjects) currentObj).expired()) {
+                        toAdd.add(((Bullet) currentObj).playExplode());
                         toRemove.add(currentObj);
                     }
                 }
@@ -93,6 +96,12 @@ public class GameWorld extends JPanel implements Runnable {
                     if (((Tank) currentObj).expired()) {
                         gameOver();
                     }
+                }
+
+            }
+            if (currentObj instanceof Animation) {
+                if (!((Animation) currentObj).update()) {
+                    toRemove.add(currentObj);
                 }
             }
 
@@ -269,11 +278,9 @@ public class GameWorld extends JPanel implements Runnable {
         //this.t1.drawImage(buffer);
         //
         // this.t2.drawImage(buffer);
-
         //this.anim.forEach(animation -> animation.update());
         //this.anim.forEach(animation -> animation.drawImage(buffer));
         //g2.drawImage(world, 0, 0, null);
-
         renderSplitScreen(g2);
         renderMiniMap(g2); // renders it to the screen instead of the gameScreen. Drawing to game screen draws map inside map.
 

@@ -1,6 +1,7 @@
 package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
+import tankrotationexample.Resources.ResourceManager;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -99,6 +100,11 @@ public class Bullet extends GameObject implements MovableObjects {
             }
         }
 
+    }
+
+    public Animation playExplode() {
+        System.out.println("PlayExplode");
+        return new Animation(this.x, this.y, ResourceManager.getAnimation("bullethit"));
     }
 
     @Override
