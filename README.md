@@ -23,15 +23,24 @@ The jar folder is to be used to store the built jar of your term-project.
 
 # Required Information when Submitting Tank Game
 
-## Version of Java Used:
+## Version of Java Used: Oracle OpenJDK v18.0.2
 
-## IDE used: IntelliJ Idea
+## IDE used: IntelliJ IDEA
 
 ## Steps to Import project into IDE:
+1. Create project from existing resources 
+2. Select project directory
 
 ## Steps to Build your Project:
- 
+1. Mark resources directory as "resource root"
+2. Create configuration (use Launcher as main class)
+
 ## Steps to run your Project:
+1. Build project using the configuration you just created
+2. Run program
+
+Alternatively:
+Use the included jar file (found in the jar directory) 
 
 ## Controls to play your Game:
 
