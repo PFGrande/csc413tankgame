@@ -45,6 +45,10 @@ public class GameWorld extends JPanel implements Runnable {
 
     @Override
     public void run() { // check collisions here
+        Sound bgMusic = ResourceManager.getSound("bgmusic");
+        bgMusic.loopCont();
+        bgMusic.playSound();
+
         try {
             while (isRunning) {
                 //this.tick++;

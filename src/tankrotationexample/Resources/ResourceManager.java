@@ -4,10 +4,7 @@ import tankrotationexample.game.Bullet;
 import tankrotationexample.game.Sound;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.*;
@@ -15,7 +12,7 @@ import java.util.*;
 public class ResourceManager {
     private final static Map<String, BufferedImage> sprites = new HashMap<String, BufferedImage>();
     private final static Map<String, List<BufferedImage>> animations = new HashMap<String, List<BufferedImage>>();;
-    //private final static Map<String, Sound> sounds = new HashMap<String, Clip>();
+    private final static Map<String, Sound> sounds = new HashMap<String, Sound>();
     private static final Map<String, Integer> animationInfo = new HashMap<String, Integer>() {{ // animation name, num of frames
         put("bullethit", 24);
         put("bulletshoot", 24);
@@ -73,6 +70,7 @@ public class ResourceManager {
     public static void loadResources() {
         ResourceManager.initSprites();
         ResourceManager.initAnimations();
+        ResourceManager.initSounds();
     }
 
     public static void main(String[] args) { // test assets loading
@@ -80,6 +78,11 @@ public class ResourceManager {
         ResourceManager.loadResources();
         //ResourceManager.initAnimations();
 //        ResourceManager.initSounds();
+        Sound bg = ResourceManager.getSound("bgmusic");
+        bg.loopCont();
+        bg.setVolume(.2f);
+        bg.playSound();
+        //bg.setLooping(3);
 
         // create pool of bullets, reminder to find where it belongs
         ResourcePool<Bullet> bulletPool = new ResourcePool<>("bullet", 300);
@@ -119,15 +122,32 @@ public class ResourceManager {
         });
     }
 
-//    private static Sound loadSound(String path) throws UnsupportedAudioFileException, IOException {
-//        AudioInputStream ais = AudioSystem.getAudioInputStream(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource(path)));
-//
-//        Clip c = AudioSystem;
-//    }
-//
-//    public static void initSounds() {
-//        try {
-//            ResourceManager.sounds.put("shoot",loadSound("sounds/bullet.wav"));
-//        }
-//    }
+    public static Sound getSound(String type) {
+        if (!ResourceManager.sounds.containsKey(type)) {
+            throw new RuntimeException("%s resource is missing".formatted(type));
+
+        }
+        return ResourceManager.sounds.get(type);
+    }
+    private static Sound loadSound(String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream ais = AudioSystem.getAudioInputStream(Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource(path)));
+
+        Clip c = AudioSystem.getClip();
+        c.open(ais);
+        Sound s = new Sound(c);
+        s.setVolume(1f);
+        return s;
+    }
+
+    public static void initSounds() {
+        try {
+            ResourceManager.sounds.put("bullet",loadSound("sounds/bullet.wav"));
+            ResourceManager.sounds.put("explosion",loadSound("sounds/shotexplosion.wav"));
+            ResourceManager.sounds.put("firing",loadSound("sounds/shotfiring.wav"));
+            ResourceManager.sounds.put("bgmusic",loadSound("sounds/Music.mid"));
+
+        } catch (Exception e) {
+            System.out.println("e");
+        }
+    }
 }
