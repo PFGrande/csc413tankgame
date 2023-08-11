@@ -267,6 +267,9 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             if (with instanceof SpeedPowerUp) {
                 ((SpeedPowerUp) with).setActivationHealth(this.lives);
                 this.R += 2;
+            } else if (with instanceof HealthPowerUp) {
+                ((HealthPowerUp) with).setActivationHealth(this.lives);
+                this.lives++;
             }
 
             activeBuffs.add((PowerUp) with);
@@ -309,7 +312,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
         }
     }
 
-    private void wallCollision() {
+    private void wallCollision() { // tank behavior towards walls
         this.vx = 0;
         this.vy = 0;
         if (this.UpPressed) {

@@ -14,6 +14,8 @@ public abstract class GameObject {
             case "9", "3" -> new Wall(x, y, ResourceManager.getSprite("unbreak"));
             case "8" -> new BreakableWall(x, y, ResourceManager.getSprite("breakable"));
             case "4" -> new SpeedPowerUp(x, y, ResourceManager.getSprite("speed"));
+            case "5" -> new HealthPowerUp(x, y, ResourceManager.getSprite("health"));
+
             default -> throw new UnsupportedOperationException();
         };
     }

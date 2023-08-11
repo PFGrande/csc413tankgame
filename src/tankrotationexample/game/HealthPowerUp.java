@@ -3,7 +3,7 @@ package tankrotationexample.game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class SpeedPowerUp extends GameObject implements PowerUp {
+public class HealthPowerUp extends GameObject implements PowerUp {
     private BufferedImage img;
     private float x;
     private float y;
@@ -12,7 +12,7 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
     boolean isExpired = false;
 
 
-    SpeedPowerUp(float x, float y, BufferedImage img) {
+    HealthPowerUp(float x, float y, BufferedImage img) {
         this.img = img;
         this.x = x;
         this.y = y;
@@ -41,8 +41,8 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
         }
     }
 
-    public boolean isActive(int currentLives) {
-        return currentLives >= activationHealth;
+    public boolean isActive(int currentLives) { // unnecessary for health power up, but implemented just in case :)
+        return this.activationHealth > currentLives;
     }
 
     @Override
