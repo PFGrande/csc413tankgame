@@ -2,6 +2,7 @@ package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
 import tankrotationexample.Resources.Pair;
+import tankrotationexample.Resources.ResourceManager;
 import tankrotationexample.Resources.ResourcePool;
 
 import java.awt.*;
@@ -326,6 +327,10 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             this.y = (float) (this.y + 10 * Math.sin(Math.toRadians(angle)));
             toggleDownPressed();
         }
+    }
+
+    public Animation playShoot() {
+        return new Animation((int)this.x+30, (int)this.y+30, ResourceManager.getAnimation("bulletshoot"));
     }
 
 }

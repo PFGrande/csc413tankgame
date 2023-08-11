@@ -24,22 +24,14 @@ public class Animation extends GameObject{
     }
 
     public boolean update() {
-        System.out.println("UPDATED");
         if (this.timeSinceLastUpdate + this.delay < System.currentTimeMillis()) {
             this.timeSinceLastUpdate = System.currentTimeMillis();
             this.currentFrame++;
-
 
             //this.currentFrame = (this.currentFrame + 1) % this.frames.size(); // infinite loop
         }
         return currentFrame < this.frames.size();
     }
-
-//    public void drawImage(Graphics2D g) {
-//        if (isRunning) {
-//            g.drawImage(this.frames.get(this.currentFrame), (int)x, (int)y, null);
-//        }
-//    }
 
     @Override
     public void drawImage(Graphics buffer) {

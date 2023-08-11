@@ -92,6 +92,7 @@ public class GameWorld extends JPanel implements Runnable {
                     GameObject temp = ((Tank) currentObj).addBulletToGameObjs();
                     if (temp != null) {
                         toAdd.add(temp);
+                        //toAdd.add(((Tank) currentObj).playShoot());
                     }
                     if (((Tank) currentObj).expired()) {
                         gameOver();
@@ -110,9 +111,6 @@ public class GameWorld extends JPanel implements Runnable {
                     toRemove.add(currentObj);
                 }
             }
-
-
-
         }
 
         for (GameObject toSpawn : toAdd) {
