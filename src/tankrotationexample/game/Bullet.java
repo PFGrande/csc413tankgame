@@ -91,7 +91,6 @@ public class Bullet extends GameObject implements MovableObjects {
     public void collides(GameObject with) {
 
         if (with instanceof Tank) { // object collision with tank
-            System.out.println(with.getClass());
             hasCollided = ((Tank) with).getId() != this.owner;
         } else if (with instanceof Wall) {
             hasCollided = true;

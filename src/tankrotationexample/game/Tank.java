@@ -252,7 +252,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             if (((Bullet) with).getOwner() != this.id) {
                 this.lives--;
             }
-            System.out.println("TANK " + this.id + "   " + this.lives);
+            //.println("TANK " + this.id + "   " + this.lives);
         } else if (with instanceof Wall) {
             if (with instanceof BreakableWall && ((BreakableWall) with).getIsBroken()) { // if wall broken
                 return;
