@@ -3,16 +3,18 @@ package tankrotationexample.game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class SpeedPowerUp extends GameObject implements PowerUp {
+public class ShieldPowerUp extends GameObject implements PowerUp {
     private BufferedImage img;
     private float x;
     private float y;
     private int activationHealth;
     Rectangle hitbox;
     boolean isExpired = false;
+    private long timeSinceActivation = 0L;
+    private final long duration = 5000;
 
 
-    public SpeedPowerUp(float x, float y, BufferedImage img) {
+    public ShieldPowerUp (float x, float y, BufferedImage img) {
         this.img = img;
         this.x = x;
         this.y = y;
@@ -40,9 +42,12 @@ public class SpeedPowerUp extends GameObject implements PowerUp {
             this.isExpired = true;
         }
     }
-
     public boolean isActive(int currentLives) {
-        return currentLives >= activationHealth;
+        return this.timeSinceActivation+this.duration < System.currentTimeMillis();
+    }
+
+    public void setTimeSinceActivation(long timeSinceActivation) {
+        this.timeSinceActivation = timeSinceActivation;
     }
 
     @Override

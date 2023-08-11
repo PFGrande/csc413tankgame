@@ -12,7 +12,7 @@ public class HealthPowerUp extends GameObject implements PowerUp {
     boolean isExpired = false;
 
 
-    HealthPowerUp(float x, float y, BufferedImage img) {
+    public HealthPowerUp(float x, float y, BufferedImage img) {
         this.img = img;
         this.x = x;
         this.y = y;

@@ -148,10 +148,10 @@ public class GameWorld extends JPanel implements Runnable {
 
 
         // 0 = empty space
-        // 9 = unbreakable barrier
         // 3 = unbreakable wall, collidable
-        // 4-7 = power up
+        // 4-6 = power up
         // 8 = breakable wall
+        // 9 = unbreakable barrier
 
         // assume csv file follows the proper format (included in txt file)
         try (BufferedReader mapReader = new BufferedReader(isr)) { // cycle through rows and columns to import map objs

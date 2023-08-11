@@ -246,21 +246,18 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
     }
 
     @Override
-    public void collides(GameObject with) {
+    public void collides(GameObject with) { // i could have updated expiration of power ups here, will do so if time allows
 
         if (with instanceof Bullet) {
             if (((Bullet) with).getOwner() != this.id) {
                 this.lives--;
             }
-            System.out.println("TANK " + this.id + "   " + this.lives);
         } else if (with instanceof Wall) {
             if (with instanceof BreakableWall && ((BreakableWall) with).getIsBroken()) { // if wall broken
                 return;
             } else {
                 wallCollision();
             }
-
-
 
         } else if (with instanceof PowerUp) {
             //((PowerUp) with).activatePowerUp(this);
@@ -270,9 +267,12 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             } else if (with instanceof HealthPowerUp) {
                 ((HealthPowerUp) with).setActivationHealth(this.lives);
                 this.lives++;
+            } else if (with instanceof ShieldPowerUp) {
+                ((ShieldPowerUp) with).setTimeSinceActivation(System.currentTimeMillis());
             }
 
             activeBuffs.add((PowerUp) with);
+
         }
 
     }
