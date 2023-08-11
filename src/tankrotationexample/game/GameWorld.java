@@ -47,6 +47,7 @@ public class GameWorld extends JPanel implements Runnable {
     public void run() { // check collisions here
         Sound bgMusic = ResourceManager.getSound("bgmusic");
         bgMusic.loopCont();
+        bgMusic.setVolume(.3f);
         bgMusic.playSound();
 
         try {

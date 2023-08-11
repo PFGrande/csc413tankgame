@@ -103,7 +103,7 @@ public class Bullet extends GameObject implements MovableObjects {
     }
 
     public Animation playExplode() {
-        System.out.println("PlayExplode");
+        (ResourceManager.getSound("explosion")).playSound();
         return new Animation(this.x, this.y, ResourceManager.getAnimation("bullethit"));
     }
 

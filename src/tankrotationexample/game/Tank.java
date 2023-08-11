@@ -2,6 +2,7 @@ package tankrotationexample.game;
 
 import tankrotationexample.GameConstants;
 import tankrotationexample.Resources.Pair;
+import tankrotationexample.Resources.ResourceManager;
 import tankrotationexample.Resources.ResourcePool;
 
 import java.awt.*;
@@ -113,6 +114,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
 
         if (this.shootPressed && ((this.timeSinceLastShot + this.cooldown) < System.currentTimeMillis())) {
             canShoot = true;
+            (ResourceManager.getSound("firing")).playSound();
             this.timeSinceLastShot = System.currentTimeMillis();
         } else {
             canShoot = false;
@@ -259,9 +261,6 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
             } else {
                 wallCollision();
             }
-
-
-
         } else if (with instanceof PowerUp) {
             //((PowerUp) with).activatePowerUp(this);
             if (with instanceof SpeedPowerUp) {
@@ -271,6 +270,7 @@ public class Tank extends GameObject implements MovableObjects{ // normally play
                 ((HealthPowerUp) with).setActivationHealth(this.lives);
                 this.lives++;
             }
+            (ResourceManager.getSound("powerup")).playSound();
 
             activeBuffs.add((PowerUp) with);
         }

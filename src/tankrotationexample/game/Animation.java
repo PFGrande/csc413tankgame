@@ -24,7 +24,7 @@ public class Animation extends GameObject{
     }
 
     public boolean update() {
-        System.out.println("UPDATED");
+
         if (this.timeSinceLastUpdate + this.delay < System.currentTimeMillis()) {
             this.timeSinceLastUpdate = System.currentTimeMillis();
             this.currentFrame++;
