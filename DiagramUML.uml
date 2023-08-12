@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/pedro/Desktop/summer2023/csc413/csc413-tankgame-PFGrande/src</OriginalElement>
+  <nodes>
+    <node x="118.0" y="298.0">tankrotationexample.menus.EndGamePanel</node>
+    <node x="-96.0" y="371.0">tankrotationexample.Resources.Pair</node>
+    <node x="378.0" y="74.0">tankrotationexample.game.Animation</node>
+    <node x="371.0" y="225.0">tankrotationexample.Resources.ResourcePool</node>
+    <node x="597.0" y="225.0">tankrotationexample.menus.StartMenuPanel</node>
+    <node x="-96.0" y="74.0">tankrotationexample.game.SpeedPowerUp</node>
+    <node x="627.0" y="74.0">tankrotationexample.game.Bullet</node>
+    <node x="598.71" y="-14.0">tankrotationexample.game.MovableObjects</node>
+    <node x="326.0" y="298.0">tankrotationexample.game.TankControl</node>
+    <node x="509.0" y="298.0">tankrotationexample.game.GameWorld</node>
+    <node x="141.0" y="225.0">tankrotationexample.Resources.ResourceManager</node>
+    <node x="410.0" y="371.0">tankrotationexample.game.Sound</node>
+    <node x="523.0" y="74.0">tankrotationexample.game.Tank</node>
+    <node x="-96.0" y="298.0">tankrotationexample.GameConstants</node>
+    <node x="90.0" y="74.0">tankrotationexample.game.HealthPowerUp</node>
+    <node x="-70.78999999999996" y="-14.0">tankrotationexample.game.PowerUp</node>
+    <node x="-96.0" y="225.0">tankrotationexample.menus.PanelUserInterface</node>
+    <node x="240.5" y="152.0">tankrotationexample.game.BreakableWall</node>
+    <node x="277.0" y="74.0">tankrotationexample.game.Wall</node>
+    <node x="246.0" y="371.0">tankrotationexample.Launcher</node>
+    <node x="77.0" y="371.0">tankrotationexample.game.Breakable</node>
+    <node x="307.0" y="-14.0">tankrotationexample.game.GameObject</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="tankrotationexample.game.SpeedPowerUp" target="tankrotationexample.game.GameObject" relationship="GENERALIZATION">
+      <point x="41.5" y="-14.0" />
+      <point x="28.5" y="44.0" />
+      <point x="379.0" y="44.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.SpeedPowerUp" target="tankrotationexample.game.PowerUp" relationship="REALIZATION">
+      <point x="-41.5" y="-14.0" />
+      <point x="-54.5" y="54.0" />
+      <point x="-11.789999999999964" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.Tank" target="tankrotationexample.game.MovableObjects" relationship="REALIZATION">
+      <point x="21.0" y="-14.0" />
+      <point x="586.0" y="34.0" />
+      <point x="684.21" y="34.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.Wall" target="tankrotationexample.game.GameObject" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="317.5" y="44.0" />
+      <point x="379.0" y="44.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.BreakableWall" target="tankrotationexample.game.Wall" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.Animation" target="tankrotationexample.game.GameObject" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="440.5" y="44.0" />
+      <point x="379.0" y="44.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.Tank" target="tankrotationexample.game.GameObject" relationship="GENERALIZATION">
+      <point x="-21.0" y="-14.0" />
+      <point x="544.0" y="44.0" />
+      <point x="379.0" y="44.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.Bullet" target="tankrotationexample.game.MovableObjects" relationship="REALIZATION">
+      <point x="23.0" y="-14.0" />
+      <point x="696.0" y="34.0" />
+      <point x="684.21" y="34.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.HealthPowerUp" target="tankrotationexample.game.GameObject" relationship="GENERALIZATION">
+      <point x="41.75" y="-14.0" />
+      <point x="215.25" y="44.0" />
+      <point x="379.0" y="44.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.Bullet" target="tankrotationexample.game.GameObject" relationship="GENERALIZATION">
+      <point x="-23.0" y="-14.0" />
+      <point x="650.0" y="44.0" />
+      <point x="379.0" y="44.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="tankrotationexample.game.HealthPowerUp" target="tankrotationexample.game.PowerUp" relationship="REALIZATION">
+      <point x="-41.75" y="-14.0" />
+      <point x="131.75" y="54.0" />
+      <point x="-11.789999999999964" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0346420323325636" showDependencies="false" x="347.0" y="202.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
